@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ký Sử Làm Game // Unity Game Developer</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', '"Cinzel"', 'serif'],
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            heritage: {
+              ink: '#0C0E12',       /* Mực tàu tuyền (Deep Ink Black) */
+              card: '#14181F',      /* Nền thẻ màu đá mài sẫm */
+              border: '#282F3D',    /* Viền lam sẫm cổ kính */
+              gold: '#D4AF37',      /* Hoàng kim / Sơn thếp vàng */
+              amber: '#E5A93C',     /* Hổ phách */
+              cinnabar: '#C84B31',  /* Đỏ son / Chu sa (Seal Vermilion) */
+              parchment: '#EAE5D9', /* Giấy điệp / Giấy dó ngà */
+              muted: '#8A92A0',     /* Bụi thời gian / Xám bạc */
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Hoạ tiết đốm giấy Dó cổ điển */
+    .bg-do-paper {
+      background-image: 
+        radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+        radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px, 16px 16px;
+    }
+
+    /* Con dấu triện đỏ truyền thống */
+    .seal-stamp {
+      border: 2px solid #C84B31;
+      color: #C84B31;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      letter-spacing: 2px;
+      box-shadow: 0 0 10px rgba(200, 75, 49, 0.15);
+    }
+
+    /* Hiệu ứng mây khói mực Á Đông */
+    .ink-glow {
+      box-shadow: 0 0 35px -8px rgba(212, 175, 55, 0.15);
+    }
+  </style>
+</head>
+
+<body class="bg-heritage-ink text-heritage-parchment font-sans selection:bg-heritage-cinnabar selection:text-white antialiased relative min-h-screen bg-do-paper">
+
+  <!-- Ánh sáng mờ phong vị Thếp Vàng & Chu Sa -->
+  <div class="fixed top-[-80px] left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-heritage-gold/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-0 right-[-100px] w-[500px] h-[500px] bg-heritage-cinnabar/5 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+
+  <!-- THANH ĐIỀU HƯỚNG CỔ PHONG -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-heritage-ink/85 border-b border-heritage-border/70">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Logo Ấn Triện & Danh xưng -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded border border-heritage-cinnabar bg-heritage-cinnabar/10 text-heritage-cinnabar font-serif font-bold text-xs flex items-center justify-center tracking-tighter group-hover:bg-heritage-cinnabar group-hover:text-white transition-all duration-300">
+          ấn
+        </div>
+        <div>
+          <span class="font-serif text-base tracking-wide font-bold text-heritage-parchment group-hover:text-heritage-gold transition-colors">
+            Khởi Tạo // <span class="text-heritage-muted font-mono font-normal text-xs">Init()</span>
+          </span>
+          <span class="block text-[10px] text-heritage-muted tracking-widest uppercase">Unity Artisan</span>
+        </div>
+      </a>
+
+      <!-- Menu cổ phong -->
+      <nav class="hidden md:flex items-center gap-8 font-serif text-sm tracking-wide">
+        <a href="#about" class="text-heritage-muted hover:text-heritage-gold transition-colors">I. Ngẫm & Luận</a>
+        <a href="#articles" class="text-heritage-muted hover:text-heritage-gold transition-colors">II. Ký Sự Kỹ Nghệ</a>
+        <a href="#projects" class="text-heritage-muted hover:text-heritage-gold transition-colors">III. Kỳ Thư Tác Phẩm</a>
+        <a href="#tech" class="text-heritage-muted hover:text-heritage-gold transition-colors">IV. Khí Cụ (Tools)</a>
+        <a href="#contact" class="px-4 py-1.5 rounded border border-heritage-gold/40 text-heritage-gold hover:bg-heritage-gold hover:text-heritage-ink font-sans text-xs font-semibold tracking-wider transition-all">
+          Bái Phỏng
+        </a>
+      </nav>
+
+      <!-- Nút Menu Mobile -->
+      <button id="menu-btn" class="md:hidden text-heritage-muted hover:text-white" aria-label="Menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Dropdown Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-heritage-card border-b border-heritage-border px-6 py-5 space-y-3 font-serif text-sm">
+      <a href="#about" class="block text-heritage-parchment hover:text-heritage-gold">I. Ngẫm & Luận</a>
+      <a href="#articles" class="block text-heritage-parchment hover:text-heritage-gold">II. Ký Sự Kỹ Nghệ</a>
+      <a href="#projects" class="block text-heritage-parchment hover:text-heritage-gold">III. Kỳ Thư Tác Phẩm</a>
+      <a href="#tech" class="block text-heritage-parchment hover:text-heritage-gold">IV. Khí Cụ Làm Game</a>
+      <a href="#contact" class="block text-heritage-gold font-semibold pt-2">V. Bái Phỏng & Liên Lạc</a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 space-y-32 py-16">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="pt-8 pb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-12">
+      <div class="space-y-6 max-w-2xl">
+        
+        <!-- Nhãn ấn chỉ -->
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold text-xs font-serif tracking-widest">
+          <span class="w-1.5 h-1.5 rounded-full bg-heritage-cinnabar"></span>
+          <span>CHUYÊN TÂM CHẾ TÁC • UNITY GAME ARTISAN</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-serif font-black tracking-tight text-white leading-tight">
+          Dệt thế giới ảo qua <br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-heritage-gold via-heritage-amber to-heritage-parchment italic">
+            Thuật toán & Hồn xưa
+          </span>
+        </h1>
+
+        <p class="text-heritage-muted text-base sm:text-lg leading-relaxed font-light">
+          Kính chào người lữ khách! Tôi là một <strong class="text-heritage-parchment font-medium">Lập trình viên Unity Game</strong> say mê tối ưu hiệu năng (Zero-GC), vật lý tương tác và đưa mỹ cảm Á Đông Việt Nam vào từng khung hình. Đây là góc chiếu lưu giữ những bài học, thất bại và chiêm nghiệm trên con đường lập trình game.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 pt-2 font-serif">
+          <a href="#articles" class="px-6 py-3 rounded bg-heritage-gold text-heritage-ink font-bold hover:bg-heritage-amber transition-all flex items-center gap-2 shadow-lg shadow-heritage-gold/10 text-sm">
+            <span>Đọc Ký Sự</span>
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+          </a>
+          <a href="#projects" class="px-6 py-3 rounded border border-heritage-border hover:border-heritage-gold/50 text-heritage-parchment hover:text-heritage-gold transition-all flex items-center gap-2 bg-heritage-card/60 text-sm">
+            <span>Khám Phá Tác Phẩm</span>
+            <i data-lucide="compass" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Khung Thẻ Triện Phong Vị Á Đông -->
+      <div class="w-full md:w-80 p-6 rounded-xl bg-heritage-card border border-heritage-border relative group hover:border-heritage-gold/40 transition-all duration-500 shadow-2xl">
+        
+        <!-- Triện Đỏ Góc Thẻ -->
+        <div class="absolute -top-3 -right-3 px-2 py-1 rounded border border-heritage-cinnabar bg-heritage-cinnabar text-[11px] font-serif font-bold text-white tracking-widest">
+          TÂM PHÁP
+        </div>
+
+        <!-- Hoa văn góc truyền thống giả lập -->
+        <div class="absolute top-2 left-2 text-heritage-gold/30 text-xs font-serif">⌜</div>
+        <div class="absolute bottom-2 right-2 text-heritage-gold/30 text-xs font-serif">⌟</div>
+
+        <div class="space-y-4 font-mono text-xs pt-1">
+          <div class="flex items-center justify-between border-b border-heritage-border pb-3">
+            <span class="text-heritage-muted font-serif">Tốc độ khung (FPS)</span>
+            <span class="text-heritage-gold font-bold">120 FPS // Định Tâm</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-heritage-border pb-3">
+            <span class="text-heritage-muted font-serif">Dung lượng rác (GC)</span>
+            <span class="text-emerald-400 font-bold">0 Byte // Tinh Gọn</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-heritage-border pb-3">
+            <span class="text-heritage-muted font-serif">Đồ họa Pipeline</span>
+            <span class="text-heritage-parchment">URP & Custom Shaders</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-heritage-border pb-3">
+            <span class="text-heritage-muted font-serif">Tâm đắc</span>
+            <span class="text-heritage-gold font-serif italic">"Ý tại ngôn ngoại"</span>
+          </div>
+          <div class="pt-2">
+            <div class="text-[11px] text-heritage-muted mb-1.5 flex justify-between font-serif">
+              <span>Độ sâu sắc & Rèn luyện</span>
+              <span class="text-heritage-gold font-mono font-semibold">98%</span>
+            </div>
+            <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-heritage-cinnabar to-heritage-gold w-[98%]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 01: VỀ TÔI & TÂM PHÁP LÀM GAME -->
+    <section id="about" class="space-y-8 scroll-mt-24">
+      <div class="flex items-center gap-4">
+        <span class="w-6 h-6 rounded-full border border-heritage-gold/40 text-heritage-gold flex items-center justify-center font-serif text-xs font-bold">I</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">Ngẫm & Tâm Pháp Lập Trình</h2>
+        <div class="h-px bg-gradient-to-r from-heritage-border to-transparent flex-1 ml-4"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-xl bg-heritage-card/70 border border-heritage-border hover:border-heritage-gold/40 transition-all space-y-3 relative group">
+          <div class="w-10 h-10 rounded-lg bg-heritage-gold/10 text-heritage-gold flex items-center justify-center border border-heritage-gold/20">
+            <i data-lucide="feather" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-serif font-semibold text-white group-hover:text-heritage-gold transition-colors">Tối Ưu & Thuần Khiết</h3>
+          <p class="text-sm text-heritage-muted leading-relaxed font-light">
+            Như nét bút lông mực tàu hạ xuống giấy Dó: phải dứt khoát, không thừa thãi. Tránh mọi cấp phát bộ nhớ rác (GC) thừa thãi trong vòng lặp game, để từng thao tác của người chơi đạt độ chuẩn xác tức thì.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl bg-heritage-card/70 border border-heritage-border hover:border-heritage-gold/40 transition-all space-y-3 relative group">
+          <div class="w-10 h-10 rounded-lg bg-heritage-cinnabar/10 text-heritage-cinnabar flex items-center justify-center border border-heritage-cinnabar/20">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-serif font-semibold text-white group-hover:text-heritage-cinnabar transition-colors">Game Feel: Hồn Của Trò Chơi</h3>
+          <p class="text-sm text-heritage-muted leading-relaxed font-light">
+            Một thanh kiếm vung ra cần có độ nặng; tiếng va chạm phải trầm ấm; rung chấn màn hình nhẹ nhàng tạo điểm rơi. Kỹ nghệ làm game không chỉ là logic, mà là nghệ thuật dẫn dắt giác quan người chơi.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl bg-heritage-card/70 border border-heritage-border hover:border-heritage-gold/40 transition-all space-y-3 relative group">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-heritage-amber flex items-center justify-center border border-heritage-amber/20">
+            <i data-lucide="scroll" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-lg font-serif font-semibold text-white group-hover:text-heritage-amber transition-colors">Kế Thừa & Khai Mở</h3>
+          <p class="text-sm text-heritage-muted leading-relaxed font-light">
+            Ước vọng mang những điển tích, chất liệu dân gian Việt Nam (tranh Hàng Trống, Đông Hồ, thần thoại sông nước) vào ngôn ngữ game hiện đại thông qua Shader mỹ thuật và gameplay lôi cuốn.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 02: DEVLOGS / KÝ SỰ KỸ NGHỆ -->
+    <section id="articles" class="space-y-8 scroll-mt-24">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <span class="w-6 h-6 rounded-full border border-heritage-gold/40 text-heritage-gold flex items-center justify-center font-serif text-xs font-bold">II</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">Ký Sự Kỹ Nghệ & Kinh Nghiệm</h2>
+        </div>
+        <span class="text-xs font-serif text-heritage-muted hidden sm:inline-block italic">Bút tích lưu trữ</span>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Bài viết 1 -->
+        <article class="group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-3 font-serif text-xs">
+              <span class="px-2.5 py-0.5 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold">Thuật Tối Ưu</span>
+              <span class="text-heritage-muted">7 phút đọc chiêm nghiệm</span>
+            </div>
+            <time class="font-mono text-xs text-heritage-muted">Thu 2026</time>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
+            <span>Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+          </h3>
+          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
+            Nguyên nhân các xung nhịp CPU bị nghẽn (GC Spikes) trong trận đánh đông lính: Box/Unbox, Linq ngầm định và String concatenation trong Update(). Phương pháp chế tác Struct-based Object Pool không sinh rác.
+          </p>
+          <div class="mt-4 flex items-center gap-4 text-xs font-mono text-heritage-muted">
+            <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
+            <span>#UnityProfiling</span>
+            <span>#ZeroAlloc</span>
+            <span>#Performance</span>
+          </div>
+        </article>
+
+        <!-- Bài viết 2 -->
+        <article class="group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-3 font-serif text-xs">
+              <span class="px-2.5 py-0.5 rounded border border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar">Kiến Trúc Code</span>
+              <span class="text-heritage-muted">10 phút nghiền ngẫm</span>
+            </div>
+            <time class="font-mono text-xs text-heritage-muted">Hạ 2026</time>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
+            <span>Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+          </h3>
+          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
+            Singleton tiện trước mắt nhưng hại lâu dài vì liên kết mã nguồn quá chặt (tight coupling). Cách thiết lập mô hình Event-driven dựa vào ScriptableObject giúp Scene độc lập, tái sử dụng dễ dàng.
+          </p>
+          <div class="mt-4 flex items-center gap-4 text-xs font-mono text-heritage-muted">
+            <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
+            <span>#Architecture</span>
+            <span>#ScriptableObjects</span>
+            <span>#CleanCode</span>
+          </div>
+        </article>
+
+        <!-- Bài viết 3 -->
+        <article class="group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-3 font-serif text-xs">
+              <span class="px-2.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/5 text-heritage-amber">Thủy Mặc & Shader</span>
+              <span class="text-heritage-muted">6 phút trực quan</span>
+            </div>
+            <time class="font-mono text-xs text-heritage-muted">Xuân 2026</time>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
+            <span>Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+          </h3>
+          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
+            Sử dụng Procedural Noise mô phỏng độ loang của mực tàu trên thớ giấy xốp, kết hợp viền Sobel Outline để tạo phong cách đồ họa Á Đông huyền hoặc mà vẫn nhẹ nhàng cho phần cứng.
+          </p>
+          <div class="mt-4 flex items-center gap-4 text-xs font-mono text-heritage-muted">
+            <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
+            <span>#ShaderGraph</span>
+            <span>#StylizedVFX</span>
+            <span>#URP</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 03: TÁC PHẨM TIÊU BIỂU -->
+    <section id="projects" class="space-y-8 scroll-mt-24">
+      <div class="flex items-center gap-4">
+        <span class="w-6 h-6 rounded-full border border-heritage-gold/40 text-heritage-gold flex items-center justify-center font-serif text-xs font-bold">III</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">Kỳ Thư Tác Phẩm</h2>
+        <div class="h-px bg-gradient-to-r from-heritage-border to-transparent flex-1 ml-4"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Dự án 1 -->
+        <div class="rounded-xl border border-heritage-border bg-heritage-card/60 p-6 flex flex-col justify-between hover:border-heritage-gold/40 transition-all">
+          <div class="space-y-4">
+            <div class="h-44 rounded-lg bg-gradient-to-b from-[#181F2B] via-[#0E131C] to-[#181F2B] border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
+              <!-- Họa tiết trăng khuyết & kiếm khí phong vị Á Đông -->
+              <div class="w-20 h-20 rounded-full border border-heritage-gold/20 flex items-center justify-center relative mb-2">
+                <i data-lucide="swords" class="w-8 h-8 text-heritage-gold"></i>
+              </div>
+              <span class="font-serif text-xs text-heritage-gold/80 tracking-widest uppercase">HÀNH ĐỘNG KIẾM HIỆP • COMBAT PROTOTYPE</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-serif font-bold text-white">Dự án: Cổ Kiếm Vấn Đạo</h3>
+              <span class="text-xs font-serif text-heritage-gold">Bản Thử Nghiệm</span>
+            </div>
+
+            <p class="text-heritage-muted text-sm leading-relaxed font-light">
+              Game hành động độ khó cao với cơ chế Đỡ đòn hoàn hảo (Parry), Tránh né linh hoạt và Phản kích theo nhịp thở. Tự thiết lập State Machine cho hành vi của kiếm khách đối thủ.
+            </p>
+          </div>
+
+          <div class="pt-6 flex items-center justify-between border-t border-heritage-border/60 font-mono text-xs">
+            <span class="text-heritage-muted">Unity 6 • URP • C#</span>
+            <a href="#" class="text-heritage-gold hover:underline flex items-center gap-1 font-serif">
+              <span>Xem Thao Tác</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dự án 2 -->
+        <div class="rounded-xl border border-heritage-border bg-heritage-card/60 p-6 flex flex-col justify-between hover:border-heritage-gold/40 transition-all">
+          <div class="space-y-4">
+            <div class="h-44 rounded-lg bg-gradient-to-b from-[#1B171A] via-[#100E12] to-[#1B171A] border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
+              <div class="w-20 h-20 rounded-full border border-heritage-cinnabar/30 flex items-center justify-center relative mb-2">
+                <i data-lucide="compass" class="w-8 h-8 text-heritage-cinnabar"></i>
+              </div>
+              <span class="font-serif text-xs text-heritage-cinnabar tracking-widest uppercase">GIẢI ĐỐ KHÔNG GIAN • PHYSICS ENGINE</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-serif font-bold text-white">Vân Sơn Mê Cung</h3>
+              <span class="text-xs font-serif text-heritage-cinnabar">Steam Demo Build</span>
+            </div>
+
+            <p class="text-heritage-muted text-sm leading-relaxed font-light">
+              Trò chơi giải đố kết hợp mỹ thuật tranh cổ. Sử dụng hệ thống Custom Gravity Physics cho phép người chơi lật ngược thế giới, bước đi trên những bức tường thành và mái ngói cổ.
+            </p>
+          </div>
+
+          <div class="pt-6 flex items-center justify-between border-t border-heritage-border/60 font-mono text-xs">
+            <span class="text-heritage-muted">Unity 2022 LTS • FMOD</span>
+            <a href="#" class="text-heritage-cinnabar hover:underline flex items-center gap-1 font-serif">
+              <span>Thưởng Thức</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 04: KHÍ CỤ (TOOLCHAIN) -->
+    <section id="tech" class="space-y-8 scroll-mt-24">
+      <div class="flex items-center gap-4">
+        <span class="w-6 h-6 rounded-full border border-heritage-gold/40 text-heritage-gold flex items-center justify-center font-serif text-xs font-bold">IV</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">Khí Cụ Chế Tác (Toolchain)</h2>
+        <div class="h-px bg-gradient-to-r from-heritage-border to-transparent flex-1 ml-4"></div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-xs">
+        
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="code-2" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">C# (.NET Core)</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Tâm pháp Clean Code</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="box" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">Unity Engine</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Chế tác 2D & 3D</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="palette" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">Shader Graph / HLSL</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Vẽ hồn đồ họa</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="activity" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">Unity Profiler</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Định lượng hiệu năng</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="git-commit" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">Git & Git LFS</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Quản lý phiên bản</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="music" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">FMOD Audio</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Âm vang tương tác</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="layers" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">Blender</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Tạc hình Low-poly</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-lg bg-heritage-card/50 border border-heritage-border flex items-center gap-3">
+          <i data-lucide="zap" class="text-heritage-gold w-4 h-4"></i>
+          <div>
+            <div class="text-white font-medium font-serif">DOTS / Jobs</div>
+            <div class="text-heritage-muted text-[11px] font-mono">Đa luồng hiệu năng cao</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 05: BÁI PHỎNG / KẾT NỐI -->
+    <section id="contact" class="scroll-mt-24">
+      <div class="rounded-2xl border border-heritage-border bg-gradient-to-b from-heritage-card to-heritage-card/30 p-8 sm:p-14 text-center max-w-2xl mx-auto space-y-6 relative ink-glow">
+        
+        <div class="inline-block px-3.5 py-1 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold font-serif text-xs tracking-wider">
+          ĐỒNG ĐẠO TƯƠNG PHÙNG
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white tracking-wide">
+          Cùng Khởi Tạo Những Thế Giới Mới?
+        </h2>
+
+        <p class="text-heritage-muted text-sm sm:text-base leading-relaxed max-w-lg mx-auto font-light">
+          Cho dù bạn đang nhen nhóm một dự án game Indie giàu bản sắc, tìm kiếm người cộng sự am hiểu hiệu năng Unity, hay đơn giản muốn đàm đạo về kỹ nghệ làm game: Trà luôn nóng, cửa luôn mở.
+        </p>
+
+        <div class="pt-4 flex flex-wrap items-center justify-center gap-4 font-serif text-sm">
+          <a href="mailto:your.email@example.com" class="px-6 py-3 rounded bg-heritage-gold text-heritage-ink font-bold hover:bg-heritage-amber transition-all flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>Gửi Thư Bái Phỏng</span>
+          </a>
+          <a href="https://github.com" target="_blank" class="px-6 py-3 rounded border border-heritage-border text-heritage-parchment hover:text-heritage-gold hover:border-heritage-gold/50 transition-all flex items-center gap-2">
+            <i data-lucide="github" class="w-4 h-4"></i>
+            <span>Mã Nguồn GitHub</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PHẦN CHÂN TRANG (FOOTER) -->
+  <footer class="border-t border-heritage-border/70 py-10 text-center font-serif text-xs text-heritage-muted">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 Unity Game Artisan. Chế tác với phong vị Á Đông & Tinh thần tối giản.</p>
+      <div class="flex items-center gap-4">
+        <a href="#hero" class="hover:text-heritage-gold transition-colors flex items-center gap-1.5">
+          <span>Trở về đỉnh trang</span>
+          <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT FOR ICONS AND MOBILE MENU -->
+  <script>
+    lucide.createIcons();
+
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+  </script>
+</body>
+</html>
