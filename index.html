@@ -249,7 +249,7 @@
       <div class="space-y-4">
 
         <!-- Bài viết 1 -->
-        <a href="articles/zero-alloc-gc.html" class="block group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+        <a href="./articles/zero-alloc-gc.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3 font-serif text-xs">
               <span class="px-2.5 py-0.5 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold">Thuật Tối Ưu</span>
@@ -259,7 +259,7 @@
           </div>
           <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
             <span>Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
           </h3>
           <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
             Nguyên nhân các xung nhịp CPU bị nghẽn (GC Spikes) trong trận đánh đông lính: Box/Unbox, Linq ngầm định và String concatenation trong Update(). Phương pháp chế tác Struct-based Object Pool không sinh rác.
@@ -285,7 +285,7 @@
         </a>
 
         <!-- Bài viết 2 -->
-        <a href="articles/scriptable-objects-architecture.html" class="block group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+        <a href="./articles/scriptable-objects-architecture.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3 font-serif text-xs">
               <span class="px-2.5 py-0.5 rounded border border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar">Kiến Trúc Code</span>
@@ -295,7 +295,7 @@
           </div>
           <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
             <span>Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
           </h3>
           <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
             Singleton tiện trước mắt nhưng hại lâu dài vì liên kết mã nguồn quá chặt (tight coupling). Cách thiết lập mô hình Event-driven dựa vào ScriptableObject giúp Scene độc lập, tái sử dụng dễ dàng.
@@ -321,7 +321,7 @@
         </a>
 
         <!-- Bài viết 3 -->
-        <a href="articles/water-ink-shader.html" class="block group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+        <a href="./articles/water-ink-shader.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3 font-serif text-xs">
               <span class="px-2.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/5 text-heritage-amber">Thủy Mặc & Shader</span>
@@ -331,7 +331,7 @@
           </div>
           <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
             <span>Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 -translate-y-1 transition-all text-heritage-gold"></i>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
           </h3>
           <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
             Sử dụng Procedural Noise mô phỏng độ loang của mực tàu trên thớ giấy xốp, kết hợp viền Sobel Outline để tạo phong cách đồ họa Á Đông huyền hoặc mà vẫn nhẹ nhàng cho phần cứng.
@@ -570,6 +570,16 @@
         });
       });
     }
+
+    // Đảm bảo click vào thẻ bài viết chuyển trang tức thì
+    document.querySelectorAll('[data-article-link]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const href = card.getAttribute('href');
+        if (href) {
+          window.location.href = href;
+        }
+      });
+    });
 
     // Đồng bộ số lượt tương tác từ LocalStorage lên trang chủ
     const STORAGE_PREFIX = 'ky_su_game_';
