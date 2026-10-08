@@ -7,32 +7,8 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['"Playfair Display"', '"Cinzel"', 'serif'],
-            sans: ['"Be Vietnam Pro"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            heritage: {
-              ink: '#0C0E12',
-              card: '#14181F',
-              border: '#282F3D',
-              gold: '#D4AF37',
-              amber: '#E5A93C',
-              cinnabar: '#C84B31',
-              parchment: '#EAE5D9',
-              muted: '#8A92A0',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <script src="../assets/js/theme.js"></script>
 
   <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,13 +17,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    .bg-do-paper {
-      background-image: 
-        radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
-        radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px, 16px 16px;
-    }
-    .ink-glow {
+        .ink-glow {
       box-shadow: 0 0 35px -8px rgba(212, 175, 55, 0.15);
     }
   </style>
@@ -80,6 +50,7 @@
 
       <!-- Nút hành động nhanh trên header -->
       <div class="flex items-center gap-3">
+        <button type="button" data-theme-toggle class="theme-toggle  w-9 h-9 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold flex items-center justify-center transition-all" aria-label="Đổi chế độ sáng/tối"><svg class="icon-sun w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
         <button id="btn-share" class="px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-xs font-serif flex items-center gap-1.5 text-heritage-muted hover:text-heritage-gold transition-all">
           <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
           <span>Chia sẻ</span>

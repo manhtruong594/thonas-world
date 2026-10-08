@@ -7,32 +7,8 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['"Playfair Display"', '"Cinzel"', 'serif'],
-            sans: ['"Be Vietnam Pro"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            heritage: {
-              ink: '#0C0E12',       /* Mực tàu tuyền (Deep Ink Black) */
-              card: '#14181F',      /* Nền thẻ màu đá mài sẫm */
-              border: '#282F3D',    /* Viền lam sẫm cổ kính */
-              gold: '#D4AF37',      /* Hoàng kim / Sơn thếp vàng */
-              amber: '#E5A93C',     /* Hổ phách */
-              cinnabar: '#C84B31',  /* Đỏ son / Chu sa (Seal Vermilion) */
-              parchment: '#EAE5D9', /* Giấy điệp / Giấy dó ngà */
-              muted: '#8A92A0',     /* Bụi thời gian / Xám bạc */
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="./assets/css/theme.css">
+  <script src="./assets/js/theme.js"></script>
 
   <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,14 +17,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Hoạ tiết đốm giấy Dó cổ điển */
-    .bg-do-paper {
-      background-image: 
-        radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
-        radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px, 16px 16px;
-    }
-
+    
     /* Con dấu triện đỏ truyền thống */
     .seal-stamp {
       border: 2px solid #C84B31;
@@ -100,10 +69,13 @@
         </a>
       </nav>
 
-      <!-- Nút Menu Mobile -->
+      <div class="flex items-center gap-3">
+        <button type="button" data-theme-toggle class="theme-toggle  w-9 h-9 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold flex items-center justify-center transition-all" aria-label="Đổi chế độ sáng/tối"><svg class="icon-sun w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+        <!-- Nút Menu Mobile -->
       <button id="menu-btn" class="md:hidden text-heritage-muted hover:text-white" aria-label="Menu">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
+      </div>
     </div>
 
     <!-- Dropdown Mobile -->
@@ -372,7 +344,7 @@
         <!-- Dự án 1 -->
         <div class="rounded-xl border border-heritage-border bg-heritage-card/60 p-6 flex flex-col justify-between hover:border-heritage-gold/40 transition-all">
           <div class="space-y-4">
-            <div class="h-44 rounded-lg bg-gradient-to-b from-[#181F2B] via-[#0E131C] to-[#181F2B] border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
+            <div class="h-44 rounded-lg project-art-a border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
               <!-- Họa tiết trăng khuyết & kiếm khí phong vị Á Đông -->
               <div class="w-20 h-20 rounded-full border border-heritage-gold/20 flex items-center justify-center relative mb-2">
                 <i data-lucide="swords" class="w-8 h-8 text-heritage-gold"></i>
@@ -402,7 +374,7 @@
         <!-- Dự án 2 -->
         <div class="rounded-xl border border-heritage-border bg-heritage-card/60 p-6 flex flex-col justify-between hover:border-heritage-gold/40 transition-all">
           <div class="space-y-4">
-            <div class="h-44 rounded-lg bg-gradient-to-b from-[#1B171A] via-[#100E12] to-[#1B171A] border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
+            <div class="h-44 rounded-lg project-art-b border border-heritage-border/70 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden group">
               <div class="w-20 h-20 rounded-full border border-heritage-cinnabar/30 flex items-center justify-center relative mb-2">
                 <i data-lucide="compass" class="w-8 h-8 text-heritage-cinnabar"></i>
               </div>

@@ -1,0 +1,73 @@
+/* Biến màu theo chủ đề. Dạng "R G B" để Tailwind hỗ trợ hậu tố độ trong suốt (bg-heritage-ink/85). */
+:root,
+html.dark {
+  --c-ink: 12 14 18;
+  --c-card: 20 24 31;
+  --c-border: 40 47 61;
+  --c-gold: 212 175 55;
+  --c-amber: 229 169 60;
+  --c-cinnabar: 200 75 49;
+  --c-parchment: 234 229 217;
+  --c-muted: 138 146 160;
+  --c-title: 255 255 255;
+  --dot-a: rgba(212, 175, 55, 0.05);
+  --dot-b: rgba(255, 255, 255, 0.02);
+  --art-a-from: #181F2B;
+  --art-a-via: #0E131C;
+  --art-b-from: #1B171A;
+  --art-b-via: #100E12;
+  --track: #1e293b;
+  color-scheme: dark;
+}
+
+html.light {
+  --c-ink: 247 242 231;
+  --c-card: 255 252 245;
+  --c-border: 217 207 184;
+  --c-gold: 150 117 14;
+  --c-amber: 168 107 20;
+  --c-cinnabar: 184 57 31;
+  --c-parchment: 43 38 32;
+  --c-muted: 107 101 88;
+  --c-title: 20 17 13;
+  --dot-a: rgba(150, 117, 14, 0.08);
+  --dot-b: rgba(0, 0, 0, 0.03);
+  --art-a-from: #EFE6CF;
+  --art-a-via: #F7F0DE;
+  --art-b-from: #F3E3DC;
+  --art-b-via: #F9EEE8;
+  --track: #e6dcc4;
+  color-scheme: light;
+}
+
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.bg-do-paper {
+  background-image:
+    radial-gradient(var(--dot-a) 1px, transparent 1px),
+    radial-gradient(var(--dot-b) 1px, transparent 1px);
+  background-size: 32px 32px, 16px 16px;
+}
+
+/* Tiêu đề dùng text-white: đổi theo chủ đề, trừ chữ nằm trên nền chu sa. */
+html.light .text-white { color: rgb(var(--c-title)); }
+html.light .hover\:text-white:hover { color: rgb(var(--c-title)); }
+html.light .bg-heritage-cinnabar.text-white,
+html.light .bg-heritage-cinnabar .text-white { color: #fff; }
+
+.bg-slate-800 { background-color: var(--track); }
+
+.project-art-a { background-image: linear-gradient(to bottom, var(--art-a-from), var(--art-a-via), var(--art-a-from)); }
+.project-art-b { background-image: linear-gradient(to bottom, var(--art-b-from), var(--art-b-via), var(--art-b-from)); }
+
+/* Nút đổi chủ đề */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: none; }
+html.dark .theme-toggle .icon-sun { display: block; }
+html.light .theme-toggle .icon-moon { display: block; }
+
+html.light .text-emerald-400 { color: #047857; }
+html.light .text-blue-400,
+html.light .hover\:text-blue-400:hover { color: #1d4ed8; }
