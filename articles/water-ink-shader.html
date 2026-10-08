@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tái Hiện Nét Vẽ Thủy Mặc Trong URP // Ký Sử Làm Game</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', '"Cinzel"', 'serif'],
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            heritage: {
+              ink: '#0C0E12',
+              card: '#14181F',
+              border: '#282F3D',
+              gold: '#D4AF37',
+              amber: '#E5A93C',
+              cinnabar: '#C84B31',
+              parchment: '#EAE5D9',
+              muted: '#8A92A0',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .bg-do-paper {
+      background-image: 
+        radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+        radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px, 16px 16px;
+    }
+  </style>
+</head>
+
+<body class="bg-heritage-ink text-heritage-parchment font-sans selection:bg-heritage-cinnabar selection:text-white antialiased relative min-h-screen bg-do-paper" data-article-id="water-ink-shader">
+
+  <!-- Thanh tiến trình đọc trên cùng -->
+  <div class="fixed top-0 left-0 w-full h-1 bg-heritage-border z-50">
+    <div id="reading-progress-bar" class="h-full bg-gradient-to-r from-heritage-cinnabar to-heritage-gold w-0 transition-all duration-150"></div>
+  </div>
+
+  <div class="fixed top-[-80px] left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-heritage-ink/85 border-b border-heritage-border/70">
+    <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded border border-amber-500/40 bg-amber-500/10 text-heritage-amber font-serif font-bold text-xs flex items-center justify-center group-hover:bg-heritage-amber group-hover:text-heritage-ink transition-all">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="font-serif text-sm tracking-wide font-bold text-heritage-parchment group-hover:text-heritage-gold transition-colors">
+            Trở về Tàng Kinh Các
+          </span>
+          <span class="block text-[10px] text-heritage-muted uppercase tracking-widest">Ký Sử Làm Game</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button id="btn-share" class="px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-xs font-serif flex items-center gap-1.5 text-heritage-muted hover:text-heritage-gold transition-all">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>Chia sẻ</span>
+        </button>
+        <button id="btn-bookmark" class="px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-xs font-serif flex items-center gap-1.5 text-heritage-muted hover:text-heritage-gold transition-all">
+          <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+          <span>Tàng Thư</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+
+    <!-- BREADCRUMB & METADATA -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 text-xs font-mono text-heritage-muted">
+        <a href="../index.html" class="hover:text-heritage-gold">Trang chủ</a>
+        <span>/</span>
+        <a href="../index.html#articles" class="hover:text-heritage-gold">Ký Sự Kỹ Nghệ</a>
+        <span>/</span>
+        <span class="text-heritage-amber">Thủy Mặc & Shader</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 font-serif text-xs">
+        <span class="px-3 py-1 rounded border border-amber-500/40 bg-amber-500/10 text-heritage-amber font-bold">
+          Thủy Mặc & Shader
+        </span>
+        <span class="text-heritage-muted">6 phút trực quan</span>
+        <span class="text-heritage-border">•</span>
+        <time class="font-mono text-heritage-muted">Xuân 2026</time>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-serif font-black text-white leading-tight">
+        Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph
+      </h1>
+
+      <p class="text-heritage-muted text-base sm:text-lg leading-relaxed font-light italic border-l-2 border-amber-500/50 pl-4 py-1">
+        "Nước thấm vào thớ giấy, mực loang tạo dáng núi sông. Kết hợp toán học đồ họa và mỹ cảm Á Đông để tạo nên một thế giới huyền ảo."
+      </p>
+    </div>
+
+    <!-- NỘI DUNG BÀI VIẾT -->
+    <article class="space-y-8 text-heritage-parchment/90 leading-relaxed text-base font-light border-b border-heritage-border/70 pb-12">
+      
+      <section class="space-y-4">
+        <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-heritage-cinnabar"></span>
+          1. Mô phỏng độ loang mực bằng Procedural Noise
+        </h2>
+        <p>
+          Trong tranh thủy mặc, ranh giới giữa sáng và tối không hề sắc nét mà có độ loang lấm tấm do mực ngấm vào thớ giấy dó xốp. Trong Shader Graph, ta thay thế hàm Step thông thường bằng phép phối trộn giữa <code class="text-heritage-gold font-mono text-xs">Perlin Noise</code> và góc chiếu sáng <code class="text-heritage-gold font-mono text-xs">NdotL</code>.
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-heritage-gold"></span>
+          2. Thuật toán viền Sobel Outline
+        </h2>
+        <p>
+          Để tạo nét cọ viền quanh kiếm khách hoặc ngọn núi, ta lấy đạo hàm chiều sâu (Depth Normal) theo ma trận hạt nhân Sobel:
+        </p>
+
+        <!-- Khối code HLSL -->
+        <div class="rounded-xl bg-heritage-card border border-heritage-border overflow-hidden">
+          <div class="px-4 py-2 bg-heritage-ink/80 border-b border-heritage-border flex items-center justify-between font-mono text-xs text-heritage-muted">
+            <span>SobelFilter.hlsl</span>
+            <span class="text-heritage-amber">HLSL / Custom Function</span>
+          </div>
+          <pre class="p-4 font-mono text-xs text-heritage-parchment overflow-x-auto leading-relaxed"><code>void SobelDepthOutline_float(float2 UV, float Thickness, out float Outline)
+{
+    float2 d = float2(Thickness, Thickness) / _ScreenParams.xy;
+    
+    float d0 = SampleSceneDepth(UV + float2(-d.x, -d.y));
+    float d1 = SampleSceneDepth(UV + float2(0, -d.y));
+    float d2 = SampleSceneDepth(UV + float2(d.x, -d.y));
+    float d3 = SampleSceneDepth(UV + float2(-d.x, 0));
+    float d5 = SampleSceneDepth(UV + float2(d.x, 0));
+    float d6 = SampleSceneDepth(UV + float2(-d.x, d.y));
+    float d7 = SampleSceneDepth(UV + float2(0, d.y));
+    float d8 = SampleSceneDepth(UV + float2(d.x, d.y));
+
+    float sobelX = (d2 + 2.0 * d5 + d8) - (d0 + 2.0 * d3 + d6);
+    float sobelY = (d6 + 2.0 * d7 + d8) - (d0 + 2.0 * d1 + d2);
+
+    Outline = saturate(sqrt(sobelX * sobelX + sobelY * sobelY) * 10.0);
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-heritage-amber"></span>
+          3. Tối ưu cho Mobile Hardware
+        </h2>
+        <p>
+          Bằng cách sử dụng Custom Post-Processing Render Feature trong Universal Renderer Data thay vì nhiều Camera phụ, hiệu ứng viền cọ chỉ tiêu tốn chưa đến 0.4ms trên GPU Mali/Adreno tầm trung.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- THANH TƯƠNG TÁC -->
+    <div class="rounded-2xl border border-heritage-border bg-heritage-card/60 p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h3 class="font-serif font-bold text-base text-white">Hạ Bút Ấn Triện</h3>
+        <p class="text-xs text-heritage-muted mt-0.5">Tỏ bày cảm nghĩ của đồng đạo đối với thiên ký sự này.</p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button id="btn-tam-dac" class="flex items-center gap-2 px-4 py-2 rounded-xl border border-heritage-border bg-heritage-card hover:border-heritage-cinnabar text-heritage-parchment hover:text-heritage-cinnabar transition-all group font-serif text-sm">
+          <span class="text-base group-hover:scale-125 transition-transform">💮</span>
+          <span>Tâm Đắc</span>
+          <span id="count-tam-dac" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-heritage-ink border border-heritage-border">51</span>
+        </button>
+
+        <button id="btn-khai-sang" class="flex items-center gap-2 px-4 py-2 rounded-xl border border-heritage-border bg-heritage-card hover:border-heritage-gold text-heritage-parchment hover:text-heritage-gold transition-all group font-serif text-sm">
+          <span class="text-base group-hover:scale-125 transition-transform">💡</span>
+          <span>Khai Sáng</span>
+          <span id="count-khai-sang" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-heritage-ink border border-heritage-border">34</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- KHU VỰC ĐÀM ĐẠO -->
+    <section id="discussions" class="space-y-6 pt-4">
+      <div class="flex items-center justify-between border-b border-heritage-border pb-4">
+        <div class="flex items-center gap-3">
+          <i data-lucide="message-square" class="w-5 h-5 text-heritage-gold"></i>
+          <h2 class="text-xl font-serif font-bold text-white">Góc Đàm Đạo Đồng Đạo</h2>
+        </div>
+        <span id="comments-count" class="font-mono text-xs text-heritage-muted">1 đàm đạo</span>
+      </div>
+
+      <!-- Form Bình luận -->
+      <form id="form-comment" class="p-6 rounded-xl bg-heritage-card/40 border border-heritage-border space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex-1">
+            <label class="block text-xs font-serif text-heritage-muted mb-1">Danh xưng đồng đạo:</label>
+            <input type="text" id="comment-author" placeholder="Ví dụ: Họa Sư Thủy Mặc..." class="w-full bg-heritage-ink border border-heritage-border rounded-lg px-3 py-2 text-sm text-heritage-parchment focus:outline-none focus:border-heritage-gold" />
+          </div>
+          <div>
+            <label class="block text-xs font-serif text-heritage-muted mb-1">Hoặc xác thực:</label>
+            <button type="button" id="btn-google-login" class="px-3.5 py-2 rounded-lg border border-heritage-border hover:border-blue-400/60 bg-heritage-ink text-xs font-serif flex items-center gap-2 text-heritage-muted hover:text-blue-400 transition-all">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+                <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z"/>
+                <path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.4s.2-1.7.4-2.4L1.9 7C.7 9.4 0 10.6 0 12.3s.7 2.9 1.9 5.3l3.7-2.9z"/>
+                <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.3L1.9 16.4C3.7 20.2 7.5 23.5 12 23.5z"/>
+              </svg>
+              <span>Xác thực Google</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-serif text-heritage-muted mb-1">Lời đàm luận / Bút tích:</label>
+          <textarea id="comment-content" required rows="3" placeholder="Để lại lời bàn, phản biện hoặc góc nhìn kỹ thuật của bạn..." class="w-full bg-heritage-ink border border-heritage-border rounded-lg p-3 text-sm text-heritage-parchment focus:outline-none focus:border-heritage-gold"></textarea>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="px-5 py-2 rounded-lg bg-heritage-gold text-heritage-ink font-serif font-bold text-xs hover:bg-heritage-amber transition-all flex items-center gap-2">
+            <span>Khắc Ghi Bút Tích</span>
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Danh sách bình luận -->
+      <div id="comments-list" class="space-y-4 pt-2"></div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-heritage-border/70 py-10 text-center font-serif text-xs text-heritage-muted mt-20">
+    <div class="max-w-4xl mx-auto px-6 flex items-center justify-between">
+      <p>© 2026 Ký Sử Làm Game. Chế tác với phong vị Á Đông.</p>
+      <a href="../index.html" class="hover:text-heritage-gold flex items-center gap-1">
+        <span>Về Trang Chủ</span>
+        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/article-interactions.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
