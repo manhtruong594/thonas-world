@@ -215,119 +215,23 @@
           <span class="w-6 h-6 rounded-full border border-heritage-gold/40 text-heritage-gold flex items-center justify-center font-serif text-xs font-bold">II</span>
           <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide">Ký Sự Kỹ Nghệ & Kinh Nghiệm</h2>
         </div>
-        <span class="text-xs font-serif text-heritage-muted hidden sm:inline-block italic">Bút tích lưu trữ</span>
+        <a href="./articles/" class="text-xs font-serif text-heritage-gold hover:text-heritage-amber flex items-center gap-1 group">
+          <span>Vào Tàng Thư Các</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"></i>
+        </a>
       </div>
 
-      <div class="space-y-4">
+      <!-- Danh sách hiển thị cố định 3 bài tiêu biểu -->
+      <div id="featured-articles-list" class="space-y-4">
+        <!-- Render động từ articles.json -->
+      </div>
 
-        <!-- Bài viết 1 -->
-        <a href="./articles/zero-alloc-gc.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-            <div class="flex items-center gap-3 font-serif text-xs">
-              <span class="px-2.5 py-0.5 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold">Thuật Tối Ưu</span>
-              <span class="text-heritage-muted">7 phút đọc chiêm nghiệm</span>
-            </div>
-            <time class="font-mono text-xs text-heritage-muted">Thu 2026</time>
-          </div>
-          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
-            <span>Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
-          </h3>
-          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
-            Nguyên nhân các xung nhịp CPU bị nghẽn (GC Spikes) trong trận đánh đông lính: Box/Unbox, Linq ngầm định và String concatenation trong Update(). Phương pháp chế tác Struct-based Object Pool không sinh rác.
-          </p>
-          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-heritage-muted pt-2 border-t border-heritage-border/40">
-            <div class="flex items-center gap-4">
-              <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
-              <span>#UnityProfiling</span>
-              <span>#ZeroAlloc</span>
-              <span>#Performance</span>
-            </div>
-            <div class="flex items-center gap-4 font-serif text-xs">
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Ấn Triện">
-                <span class="text-heritage-cinnabar">💮</span>
-                <span data-home-reaction="zero-alloc-gc">42</span>
-              </span>
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Đàm Đạo">
-                <i data-lucide="message-square" class="w-3.5 h-3.5 text-heritage-gold"></i>
-                <span data-home-comments="zero-alloc-gc">2</span>
-              </span>
-            </div>
-          </div>
+      <!-- Nút xem toàn bộ kho tàng thư bài viết -->
+      <div class="pt-2 text-center">
+        <a href="./articles/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-heritage-gold/40 text-heritage-gold hover:bg-heritage-gold/10 hover:border-heritage-gold transition-all font-serif text-sm">
+          <span>Xem Toàn Bộ Tàng Thư Ký Sự</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
-
-        <!-- Bài viết 2 -->
-        <a href="./articles/scriptable-objects-architecture.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-            <div class="flex items-center gap-3 font-serif text-xs">
-              <span class="px-2.5 py-0.5 rounded border border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar">Kiến Trúc Code</span>
-              <span class="text-heritage-muted">10 phút nghiền ngẫm</span>
-            </div>
-            <time class="font-mono text-xs text-heritage-muted">Hạ 2026</time>
-          </div>
-          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
-            <span>Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
-          </h3>
-          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
-            Singleton tiện trước mắt nhưng hại lâu dài vì liên kết mã nguồn quá chặt (tight coupling). Cách thiết lập mô hình Event-driven dựa vào ScriptableObject giúp Scene độc lập, tái sử dụng dễ dàng.
-          </p>
-          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-heritage-muted pt-2 border-t border-heritage-border/40">
-            <div class="flex items-center gap-4">
-              <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
-              <span>#Architecture</span>
-              <span>#ScriptableObjects</span>
-              <span>#CleanCode</span>
-            </div>
-            <div class="flex items-center gap-4 font-serif text-xs">
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Ấn Triện">
-                <span class="text-heritage-cinnabar">💮</span>
-                <span data-home-reaction="scriptable-objects-architecture">35</span>
-              </span>
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Đàm Đạo">
-                <i data-lucide="message-square" class="w-3.5 h-3.5 text-heritage-gold"></i>
-                <span data-home-comments="scriptable-objects-architecture">1</span>
-              </span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Bài viết 3 -->
-        <a href="./articles/water-ink-shader.html" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-            <div class="flex items-center gap-3 font-serif text-xs">
-              <span class="px-2.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/5 text-heritage-amber">Thủy Mặc & Shader</span>
-              <span class="text-heritage-muted">6 phút trực quan</span>
-            </div>
-            <time class="font-mono text-xs text-heritage-muted">Xuân 2026</time>
-          </div>
-          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
-            <span>Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
-          </h3>
-          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
-            Sử dụng Procedural Noise mô phỏng độ loang của mực tàu trên thớ giấy xốp, kết hợp viền Sobel Outline để tạo phong cách đồ họa Á Đông huyền hoặc mà vẫn nhẹ nhàng cho phần cứng.
-          </p>
-          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-heritage-muted pt-2 border-t border-heritage-border/40">
-            <div class="flex items-center gap-4">
-              <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
-              <span>#ShaderGraph</span>
-              <span>#StylizedVFX</span>
-              <span>#URP</span>
-            </div>
-            <div class="flex items-center gap-4 font-serif text-xs">
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Ấn Triện">
-                <span class="text-heritage-cinnabar">💮</span>
-                <span data-home-reaction="water-ink-shader">51</span>
-              </span>
-              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Đàm Đạo">
-                <i data-lucide="message-square" class="w-3.5 h-3.5 text-heritage-gold"></i>
-                <span data-home-comments="water-ink-shader">1</span>
-              </span>
-            </div>
-          </div>
-        </a>
-
       </div>
     </section>
 
@@ -524,7 +428,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT FOR ICONS AND MOBILE MENU -->
+  <!-- SCRIPT FOR ICONS, MOBILE MENU & ARTICLES -->
   <script>
     lucide.createIcons();
 
@@ -543,30 +447,146 @@
       });
     }
 
-    // Đảm bảo click vào thẻ bài viết chuyển trang tức thì
-    document.querySelectorAll('[data-article-link]').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const href = card.getAttribute('href');
-        if (href) {
-          window.location.href = href;
-        }
-      });
-    });
-
-    // Đồng bộ số lượt tương tác từ LocalStorage lên trang chủ
     const STORAGE_PREFIX = 'ky_su_game_';
-    ['zero-alloc-gc', 'scriptable-objects-architecture', 'water-ink-shader'].forEach(id => {
-      const reactions = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'reactions_' + id));
-      if (reactions && reactions.tamDac) {
-        const el = document.querySelector(`[data-home-reaction="${id}"]`);
-        if (el) el.textContent = reactions.tamDac;
+
+    function getHomeInteractions(id) {
+      const defaultReactions = {
+        'zero-alloc-gc': { tamDac: 42, khaiSang: 28 },
+        'scriptable-objects-architecture': { tamDac: 35, khaiSang: 19 },
+        'water-ink-shader': { tamDac: 51, khaiSang: 34 }
+      };
+      const defaultCommentsCount = {
+        'zero-alloc-gc': 2,
+        'scriptable-objects-architecture': 1,
+        'water-ink-shader': 1
+      };
+
+      let tamDac = (defaultReactions[id] && defaultReactions[id].tamDac) || 10;
+      let comments = defaultCommentsCount[id] || 0;
+
+      try {
+        const storedReactions = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'reactions_' + id));
+        if (storedReactions && typeof storedReactions.tamDac === 'number') {
+          tamDac = storedReactions.tamDac;
+        }
+        const storedComments = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'comments_' + id));
+        if (storedComments && Array.isArray(storedComments)) {
+          comments = storedComments.length;
+        }
+      } catch (e) {}
+
+      return { tamDac, comments };
+    }
+
+    function createFeaturedCard(art) {
+      const { tamDac, comments } = getHomeInteractions(art.id);
+      const tagsHtml = (art.tags || []).map(t => `<span>#${t}</span>`).join('\n');
+      const badgeStyle = art.badgeStyle || 'border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold';
+
+      return `
+        <a href="./${art.slug}" data-article-link class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-3 font-serif text-xs">
+              <span class="px-2.5 py-0.5 rounded border ${badgeStyle}">${art.category}</span>
+              <span class="text-heritage-muted">${art.readTime}</span>
+            </div>
+            <time class="font-mono text-xs text-heritage-muted">${art.season || art.date}</time>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
+            <span>${art.title}</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+          </h3>
+          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
+            ${art.summary}
+          </p>
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-heritage-muted pt-2 border-t border-heritage-border/40">
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
+              ${tagsHtml}
+            </div>
+            <div class="flex items-center gap-4 font-serif text-xs">
+              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Ấn Triện">
+                <span class="text-heritage-cinnabar">💮</span>
+                <span data-home-reaction="${art.id}">${tamDac}</span>
+              </span>
+              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Đàm Đạo">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 text-heritage-gold"></i>
+                <span data-home-comments="${art.id}">${comments}</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      `;
+    }
+
+    async function loadFeaturedArticles() {
+      const container = document.getElementById('featured-articles-list');
+      if (!container) return;
+
+      let articles = [];
+      try {
+        const res = await fetch('./assets/data/articles.json');
+        if (!res.ok) throw new Error('Không thể tải articles.json');
+        articles = await res.json();
+      } catch (err) {
+        console.warn('Lỗi nạp articles.json, dùng fallback:', err);
+        articles = [
+          {
+            id: 'zero-alloc-gc',
+            title: 'Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc',
+            slug: 'articles/zero-alloc-gc.html',
+            category: 'Thuật Tối Ưu',
+            badgeStyle: 'border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold',
+            readTime: '7 phút đọc chiêm nghiệm',
+            season: 'Thu 2026',
+            summary: 'Nguyên nhân các xung nhịp CPU bị nghẽn (GC Spikes) trong trận đánh đông lính: Box/Unbox, Linq ngầm định và String concatenation trong Update(). Phương pháp chế tác Struct-based Object Pool không sinh rác.',
+            tags: ['UnityProfiling', 'ZeroAlloc', 'Performance'],
+            featured: true
+          },
+          {
+            id: 'scriptable-objects-architecture',
+            title: 'Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects',
+            slug: 'articles/scriptable-objects-architecture.html',
+            category: 'Kiến Trúc Code',
+            badgeStyle: 'border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar',
+            readTime: '10 phút nghiền ngẫm',
+            season: 'Hạ 2026',
+            summary: 'Singleton tiện trước mắt nhưng hại lâu dài vì liên kết mã nguồn quá chặt (tight coupling). Cách thiết lập mô hình Event-driven dựa vào ScriptableObject giúp Scene độc lập, tái sử dụng dễ dàng.',
+            tags: ['Architecture', 'ScriptableObjects', 'CleanCode'],
+            featured: true
+          },
+          {
+            id: 'water-ink-shader',
+            title: 'Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph',
+            slug: 'articles/water-ink-shader.html',
+            category: 'Thủy Mặc & Shader',
+            badgeStyle: 'border-amber-500/30 bg-amber-500/5 text-heritage-amber',
+            readTime: '6 phút trực quan',
+            season: 'Xuân 2026',
+            summary: 'Sử dụng Procedural Noise mô phỏng độ loang của mực tàu trên thớ giấy xốp, kết hợp viền Sobel Outline để tạo phong cách đồ họa Á Đông huyền hoặc mà vẫn nhẹ nhàng cho phần cứng.',
+            tags: ['ShaderGraph', 'StylizedVFX', 'URP'],
+            featured: true
+          }
+        ];
       }
-      const comments = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'comments_' + id));
-      if (comments && comments.length !== undefined) {
-        const el = document.querySelector(`[data-home-comments="${id}"]`);
-        if (el) el.textContent = comments.length;
-      }
-    });
+
+      // Giữ cố định tối đa 3 bài tiêu biểu
+      const featured = articles.filter(a => a.featured).slice(0, 3);
+      container.innerHTML = featured.map(createFeaturedCard).join('');
+      lucide.createIcons();
+
+      // Bắt sự kiện click vào thẻ
+      container.querySelectorAll('[data-article-link]').forEach(card => {
+        card.addEventListener('click', (e) => {
+          const href = card.getAttribute('href');
+          if (href) {
+            window.location.href = href;
+          }
+        });
+      });
+    }
+
+    loadFeaturedArticles();
   </script>
 </body>
 </html>

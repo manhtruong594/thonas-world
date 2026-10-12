@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tàng Thư Các // Toàn Tập Ký Sự Kỹ Nghệ</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <script src="../assets/js/theme.js"></script>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .seal-stamp {
+      border: 2px solid #C84B31;
+      color: #C84B31;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      letter-spacing: 2px;
+      box-shadow: 0 0 10px rgba(200, 75, 49, 0.15);
+    }
+  </style>
+</head>
+
+<body class="bg-heritage-ink text-heritage-parchment font-sans selection:bg-heritage-cinnabar selection:text-white antialiased relative min-h-screen bg-do-paper">
+
+  <!-- Ánh sáng nền mờ -->
+  <div class="fixed top-[-80px] left-1/2 -translate-x-1/2 w-[700px] h-[360px] bg-heritage-gold/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-0 right-[-100px] w-[500px] h-[500px] bg-heritage-cinnabar/5 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-heritage-ink/85 border-b border-heritage-border/70">
+    <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded border border-heritage-cinnabar bg-heritage-cinnabar/10 text-heritage-cinnabar font-serif font-bold text-xs flex items-center justify-center tracking-tighter group-hover:bg-heritage-cinnabar group-hover:text-white transition-all duration-300">
+          TW
+        </div>
+        <div>
+          <span class="font-serif text-base tracking-wide font-bold text-heritage-parchment group-hover:text-heritage-gold transition-colors">
+            Khởi Tạo // <span class="text-heritage-muted font-mono font-normal text-xs">Init()</span>
+          </span>
+          <span class="block text-[10px] text-heritage-muted tracking-widest uppercase">Unity Artisan</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <button type="button" data-theme-toggle class="theme-toggle w-9 h-9 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold flex items-center justify-center transition-all" aria-label="Đổi chế độ sáng/tối">
+          <svg class="icon-sun w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+        </button>
+
+        <a href="../index.html" class="px-3.5 py-1.5 rounded border border-heritage-gold/40 text-heritage-gold hover:bg-heritage-gold hover:text-heritage-ink font-serif text-xs font-semibold tracking-wider transition-all flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Trang Chủ</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
+
+    <!-- TIÊU ĐỀ TÀNG THƯ CÁC -->
+    <section class="space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded border border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold text-xs font-serif tracking-widest">
+        <span class="w-1.5 h-1.5 rounded-full bg-heritage-cinnabar"></span>
+        <span>TÀNG THƯ BÁCH KHOA • DEVLOG ARCHIVE</span>
+      </div>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-serif font-bold text-white tracking-wide">
+            Tàng Thư Các
+          </h1>
+          <p class="text-heritage-muted text-sm mt-2 max-w-2xl leading-relaxed font-light">
+            Nơi lưu trữ toàn bộ các chuyên đề kỹ thuật, phân tích kiến trúc Unity, tối ưu hiệu năng và mỹ cảm đồ họa Á Đông đã đúc kết qua thực tiễn.
+          </p>
+        </div>
+        <div id="article-counter" class="text-xs font-mono text-heritage-gold/80 bg-heritage-card px-3 py-1.5 rounded border border-heritage-border self-start md:self-auto">
+          Đang nạp dữ liệu...
+        </div>
+      </div>
+    </section>
+
+    <!-- THANH TÌM KIẾM & BỘ LỌC -->
+    <section class="space-y-4 bg-heritage-card/60 p-5 rounded-xl border border-heritage-border">
+      
+      <!-- Ô tìm kiếm tức thời -->
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-heritage-muted absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Tìm kiếm theo tiêu đề, tóm tắt, thẻ tag (#ZeroAlloc, #Shader...)"
+          class="w-full bg-heritage-ink/70 border border-heritage-border focus:border-heritage-gold text-heritage-parchment pl-10 pr-4 py-2.5 rounded-lg text-sm focus:outline-none transition-colors font-sans placeholder:text-heritage-muted/60"
+        />
+      </div>
+
+      <!-- Phân loại chuyên mục -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-heritage-border/50 text-xs font-serif" id="category-filters">
+        <button data-cat="all" class="filter-btn active px-3 py-1.5 rounded border border-heritage-gold bg-heritage-gold text-heritage-ink font-semibold transition-all">
+          Tất Cả
+        </button>
+        <button data-cat="Thuật Tối Ưu" class="filter-btn px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold transition-all">
+          Thuật Tối Ưu
+        </button>
+        <button data-cat="Kiến Trúc Code" class="filter-btn px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold transition-all">
+          Kiến Trúc Code
+        </button>
+        <button data-cat="Thủy Mặc & Shader" class="filter-btn px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-gold/60 text-heritage-muted hover:text-heritage-gold transition-all">
+          Thủy Mặc & Shader
+        </button>
+        <button data-cat="bookmarks" class="filter-btn px-3 py-1.5 rounded border border-heritage-border hover:border-heritage-cinnabar text-heritage-muted hover:text-heritage-cinnabar transition-all flex items-center gap-1">
+          <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+          <span>Đã Đánh Dấu</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- DANH SÁCH BÀI VIẾT -->
+    <section>
+      <div id="articles-container" class="space-y-4">
+        <!-- Render động từ articles.json -->
+      </div>
+
+      <!-- Trạng thái trống khi tìm không thấy -->
+      <div id="empty-state" class="hidden text-center py-16 px-6 bg-heritage-card/30 rounded-xl border border-dashed border-heritage-border space-y-3">
+        <div class="w-12 h-12 rounded-full border border-heritage-border mx-auto flex items-center justify-center text-heritage-muted">
+          <i data-lucide="scroll" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-base font-serif font-bold text-white">Chưa tìm thấy bút tích phù hợp</h3>
+        <p class="text-xs text-heritage-muted max-w-sm mx-auto">
+          Thử tìm bằng từ khóa khác hoặc bấm nút "Tất Cả" để hiển thị lại toàn bộ tàng thư.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-heritage-border/70 py-10 text-center font-serif text-xs text-heritage-muted mt-20">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 Unity Game Artisan. Chế tác với phong vị Á Đông & Tinh thần tối giản.</p>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="hover:text-heritage-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span>Trang chủ</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC TÀNG THƯ CÁC -->
+  <script>
+    const STORAGE_PREFIX = 'ky_su_game_';
+    let allArticles = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    // Hàm lấy chỉ số tương tác từ LocalStorage với fallback mặc định
+    function getInteractions(id) {
+      const defaultReactions = {
+        'zero-alloc-gc': { tamDac: 42, khaiSang: 28 },
+        'scriptable-objects-architecture': { tamDac: 35, khaiSang: 19 },
+        'water-ink-shader': { tamDac: 51, khaiSang: 34 }
+      };
+      const defaultCommentsCount = {
+        'zero-alloc-gc': 2,
+        'scriptable-objects-architecture': 1,
+        'water-ink-shader': 1
+      };
+
+      let tamDac = (defaultReactions[id] && defaultReactions[id].tamDac) || 10;
+      let comments = (defaultCommentsCount[id]) || 0;
+
+      try {
+        const storedReactions = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'reactions_' + id));
+        if (storedReactions && typeof storedReactions.tamDac === 'number') {
+          tamDac = storedReactions.tamDac;
+        }
+        const storedComments = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'comments_' + id));
+        if (storedComments && Array.isArray(storedComments)) {
+          comments = storedComments.length;
+        }
+      } catch (e) {}
+
+      return { tamDac, comments };
+    }
+
+    function getBookmarkedIds() {
+      try {
+        const bm = JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'bookmarks'));
+        return Array.isArray(bm) ? bm : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // Render 1 thẻ bài viết
+    function createArticleCard(art) {
+      const { tamDac, comments } = getInteractions(art.id);
+      const isBookmarked = getBookmarkedIds().includes(art.id);
+      const tagsHtml = (art.tags || []).map(t => `<span>#${t}</span>`).join('\n');
+      const badgeStyle = art.badgeStyle || 'border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold';
+
+      return `
+        <a href="../${art.slug}" class="block cursor-pointer group p-6 rounded-xl bg-heritage-card/50 border border-heritage-border hover:border-heritage-gold/50 hover:bg-heritage-card transition-all duration-300 relative">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-3 font-serif text-xs">
+              <span class="px-2.5 py-0.5 rounded border ${badgeStyle}">${art.category}</span>
+              <span class="text-heritage-muted">${art.readTime}</span>
+              ${isBookmarked ? '<span class="text-heritage-cinnabar text-[11px] font-sans flex items-center gap-1 font-semibold">● Đã lưu</span>' : ''}
+            </div>
+            <time class="font-mono text-xs text-heritage-muted">${art.season || art.date}</time>
+          </div>
+          <h2 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
+            <span>${art.title}</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+          </h2>
+          <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
+            ${art.summary}
+          </p>
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-heritage-muted pt-2 border-t border-heritage-border/40">
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="text-heritage-gold/60 font-serif">Mục lục:</span>
+              ${tagsHtml}
+            </div>
+            <div class="flex items-center gap-4 font-serif text-xs">
+              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Ấn Triện Tâm Đắc">
+                <span class="text-heritage-cinnabar">💮</span>
+                <span>${tamDac}</span>
+              </span>
+              <span class="flex items-center gap-1.5 text-heritage-parchment" title="Đàm Đạo">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 text-heritage-gold"></i>
+                <span>${comments}</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      `;
+    }
+
+    // Lọc và render danh sách bài viết
+    function renderArticles() {
+      const container = document.getElementById('articles-container');
+      const emptyState = document.getElementById('empty-state');
+      const counter = document.getElementById('article-counter');
+      const bookmarkedIds = getBookmarkedIds();
+
+      const filtered = allArticles.filter(art => {
+        // Lọc danh mục
+        if (currentFilter === 'bookmarks') {
+          if (!bookmarkedIds.includes(art.id)) return false;
+        } else if (currentFilter !== 'all') {
+          if (art.category !== currentFilter) return false;
+        }
+
+        // Lọc tìm kiếm
+        if (searchQuery.trim() !== '') {
+          const q = searchQuery.toLowerCase().trim();
+          const title = (art.title || '').toLowerCase();
+          const summary = (art.summary || '').toLowerCase();
+          const tags = (art.tags || []).join(' ').toLowerCase();
+          const cat = (art.category || '').toLowerCase();
+          return title.includes(q) || summary.includes(q) || tags.includes(q) || cat.includes(q);
+        }
+
+        return true;
+      });
+
+      counter.textContent = `Hiển thị: ${filtered.length} / ${allArticles.length} bài`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        container.innerHTML = filtered.map(createArticleCard).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    // Nạp dữ liệu articles.json
+    async function loadArticles() {
+      try {
+        const res = await fetch('../assets/data/articles.json');
+        if (!res.ok) throw new Error('Không thể tải articles.json');
+        allArticles = await res.json();
+      } catch (err) {
+        console.error('Lỗi nạp bài viết:', err);
+        // Fallback tối thiểu phòng trường hợp duyệt file tĩnh
+        allArticles = [
+          {
+            id: 'zero-alloc-gc',
+            title: 'Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc',
+            slug: 'articles/zero-alloc-gc.html',
+            category: 'Thuật Tối Ưu',
+            badgeStyle: 'border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold',
+            readTime: '7 phút đọc chiêm nghiệm',
+            season: 'Thu 2026',
+            summary: 'Nguyên nhân các xung nhịp CPU bị nghẽn (GC Spikes) trong trận đánh đông lính: Box/Unbox, Linq ngầm định và String concatenation trong Update(). Phương pháp chế tác Struct-based Object Pool không sinh rác.',
+            tags: ['UnityProfiling', 'ZeroAlloc', 'Performance'],
+            featured: true
+          },
+          {
+            id: 'scriptable-objects-architecture',
+            title: 'Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects',
+            slug: 'articles/scriptable-objects-architecture.html',
+            category: 'Kiến Trúc Code',
+            badgeStyle: 'border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar',
+            readTime: '10 phút nghiền ngẫm',
+            season: 'Hạ 2026',
+            summary: 'Singleton tiện trước mắt nhưng hại lâu dài vì liên kết mã nguồn quá chặt (tight coupling). Cách thiết lập mô hình Event-driven dựa vào ScriptableObject giúp Scene độc lập, tái sử dụng dễ dàng.',
+            tags: ['Architecture', 'ScriptableObjects', 'CleanCode'],
+            featured: true
+          },
+          {
+            id: 'water-ink-shader',
+            title: 'Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph',
+            slug: 'articles/water-ink-shader.html',
+            category: 'Thủy Mặc & Shader',
+            badgeStyle: 'border-amber-500/30 bg-amber-500/5 text-heritage-amber',
+            readTime: '6 phút trực quan',
+            season: 'Xuân 2026',
+            summary: 'Sử dụng Procedural Noise mô phỏng độ loang của mực tàu trên thớ giấy xốp, kết hợp viền Sobel Outline để tạo phong cách đồ họa Á Đông huyền hoặc mà vẫn nhẹ nhàng cho phần cứng.',
+            tags: ['ShaderGraph', 'StylizedVFX', 'URP'],
+            featured: true
+          }
+        ];
+      }
+
+      renderArticles();
+    }
+
+    // Lắng nghe sự kiện
+    document.addEventListener('DOMContentLoaded', () => {
+      loadArticles();
+
+      // Sự kiện gõ tìm kiếm
+      const searchInput = document.getElementById('search-input');
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderArticles();
+      });
+
+      // Sự kiện chọn phân loại
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => {
+            b.classList.remove('active', 'bg-heritage-gold', 'text-heritage-ink', 'font-semibold');
+            b.classList.add('text-heritage-muted');
+          });
+          btn.classList.add('active', 'bg-heritage-gold', 'text-heritage-ink', 'font-semibold');
+          btn.classList.remove('text-heritage-muted');
+
+          currentFilter = btn.getAttribute('data-cat');
+          renderArticles();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

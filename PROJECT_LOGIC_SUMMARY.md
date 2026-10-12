@@ -8,13 +8,19 @@ Dự án **thonas-world** là một website cá nhân / portfolio kiêm blog k�
 
 ```text
 thonas-world/
-├── index.html                      # Trang chủ portfolio chính
-├── articles/                       # Các trang bài viết kỹ thuật độc lập
+├── index.html                      # Trang chủ portfolio chính (Showcase 3 bài tiêu biểu)
+├── articles/                       # Thư mục chuyên đề bài viết
+│   ├── index.html                  # Tàng Thư Các: Toàn bộ bài viết, tìm kiếm, lọc chuyên mục
 │   ├── zero-alloc-gc.html          # Chuyên đề tối ưu Garbage Collection trong Unity
 │   ├── scriptable-objects-architecture.html # Chuyên đề kiến trúc GameEvent ScriptableObjects
 │   └── water-ink-shader.html       # Chuyên đề URP Shader Graph Thủy Mặc & Sobel
 ├── assets/
+│   ├── data/
+│   │   └── articles.json           # Siêu dữ liệu bài viết tập trung (metadata registry)
+│   ├── css/
+│   │   └── theme.css               # Hệ biến màu cổ phong & Dark/Light mode
 │   └── js/
+│       ├── theme.js                # Quản lý giao diện sáng/tối
 │       └── article-interactions.js # Module xử lý tương tác độc giả & LocalStorage
 └── PROJECT_LOGIC_SUMMARY.md        # Tài liệu tóm tắt logic toàn bộ dự án
 ```
@@ -33,14 +39,15 @@ thonas-world/
   1. `header`: Thanh điều hướng cố định với menu desktop và drawer mobile menu (toggle qua id `menu-btn` và `mobile-menu`).
   2. `#hero`: Lời tựa, định danh "Unity Game Artisan", thẻ trạng thái thông số kỹ thuật (120 FPS, 0 B GC, URP Pipeline).
   3. `#about` (Ngẫm & Luận): 3 trụ cột triết lý làm game (Tối ưu thuần khiết, Game Feel, Mỹ cảm Á Đông).
-  4. `#articles` (Ký Sự Kỹ Nghệ): Danh sách 3 bài viết chuyên đề dạng thẻ liên kết (`<a href="./articles/..." data-article-link>`).
+  4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Tàng Thư Các" (`articles/index.html`).
   5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*).
   6. `#tech` (Khí Cụ Làm Game): Danh sách công cụ (C#, Unity, Shader Graph, Unity Profiler, Git LFS, FMOD, Blender, DOTS).
   7. `#contact` (Bái Phỏng): Khung kết nối qua email và GitHub.
 - **Logic Script Trang Chủ:**
   - **Mobile Menu Toggle:** Đóng/mở drawer trên thiết bị di động, tự đóng khi click vào liên kết.
+  - **Nạp động 3 bài tiêu biểu:** Tải từ `assets/data/articles.json`, lọc theo `featured: true`, render tối đa 3 thẻ bài viết cổ phong.
   - **Điều hướng bài viết tức thời:** Bắt sự kiện click trên `[data-article-link]` để chuyển hướng ngay sang trang bài viết.
-  - **Đồng bộ chỉ số tương tác thời gian thực:** Duyệt qua các ID bài viết (`zero-alloc-gc`, `scriptable-objects-architecture`, `water-ink-shader`), đọc số lượt Ấn Triện (`tamDac`) và số lượt bình luận từ `localStorage`, ghi đè lên các thuộc tính `[data-home-reaction]` và `[data-home-comments]`.
+  - **Đồng bộ chỉ số tương tác thời gian thực:** Đọc số lượt Ấn Triện (`tamDac`) và số lượt bình luận từ `localStorage` để cập nhật trực tiếp lên các thẻ tương ứng.
 
 ---
 
@@ -94,6 +101,15 @@ Mỗi trang là một tài liệu HTML hoàn chỉnh, kế thừa layout Á Đô
 - Khung hành động "Hạ Bút Ấn Triện" (`#btn-tam-dac`, `#btn-khai-sang`).
 - Khu vực "Góc Đàm Đạo Đồng Đạo" với form bình luận và danh sách bình luận đã lưu.
 
+### 2.4. Trang Tàng Thư Các (`articles/index.html`)
+
+Trang kho lưu trữ bài viết toàn diện của hệ thống:
+- **Header:** Giữ thanh điều hướng phong cách cổ phong Á Đông và nút quay lại trang chủ.
+- **Thanh tìm kiếm tức thời (Client-side Search):** Tìm kiếm theo tiêu đề, tóm tắt và thẻ tag (`#ZeroAlloc`, `#Shader`...).
+- **Bộ lọc chuyên mục (Taxonomy Tabs):** *Tất Cả*, *Thuật Tối Ưu*, *Kiến Trúc Code*, *Thủy Mặc & Shader*, và tab *Đã Đánh Dấu* (lọc theo danh sách bookmark của người dùng).
+- **Bộ đếm & Danh sách bài:** Tự động nạp từ `assets/data/articles.json`, hiển thị số lượng bài tương ứng, render thẻ bài viết kèm số liệu Ấn Triện và Đàm Đạo từ `localStorage`.
+- **Trạng thái rỗng (Empty State):** Thông báo cổ phong trang nhã khi không tìm thấy kết quả phù hợp.
+
 ---
 
 ## 3. Cơ Chế Lưu Trữ Dữ Liệu Cục Bộ (LocalStorage Schema)
@@ -112,12 +128,26 @@ Mỗi trang là một tài liệu HTML hoàn chỉnh, kế thừa layout Á Đô
 1. **GitHub Pages:**
    - Website được deploy tự động từ nhánh `main`.
    - Lưu ý đệm cache (`Cache-Control: max-age=600`): Khi có commit mới đẩy lên, cần **Ctrl + F5** hoặc mở tab ẩn danh để trình duyệt bỏ qua cache cũ.
-2. **Khả năng mở rộng — thêm bài viết mới:**
-   1. Nhân bản một file trong `articles/`, đặt `data-article-id="id-moi"`.
-   2. Thêm thẻ liên kết trong `#articles` của `index.html` với `data-article-link`, `data-home-reaction="id-moi"`, `data-home-comments="id-moi"`.
-   3. Thêm `id-moi` vào mảng ID trong script đồng bộ chỉ số của `index.html` (hiện: `['zero-alloc-gc', 'scriptable-objects-architecture', 'water-ink-shader']`). Bỏ bước này thì thẻ trang chủ không cập nhật số liệu.
-   4. (Tùy chọn) Thêm dữ liệu mặc định cho `id-moi` vào `DEFAULT_REACTIONS` và `DEFAULT_COMMENTS` trong `article-interactions.js`. Nếu bỏ qua, reaction mặc định là `{ tamDac: 10, khaiSang: 5 }` và danh sách bình luận rỗng.
-   - Phần tương tác bên trong trang bài viết (reaction, bookmark, bình luận) tự khởi tạo riêng theo ID.
+2. **Khả năng mở rộng — thêm bài viết mới (Data-Driven):**
+   1. Nhân bản một file trong `articles/`, đặt `data-article-id="id-moi"` (ví dụ: `articles/new-post.html`).
+   2. Thêm siêu dữ liệu vào `assets/data/articles.json`:
+      ```json
+      {
+        "id": "new-post",
+        "title": "Tiêu đề bài viết...",
+        "slug": "articles/new-post.html",
+        "category": "Thuật Tối Ưu",
+        "badgeStyle": "border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold",
+        "readTime": "8 phút",
+        "season": "Đông 2026",
+        "summary": "Tóm tắt...",
+        "tags": ["Tag1", "Tag2"],
+        "featured": true,
+        "date": "2026-11-01"
+      }
+      ```
+   - Trang Tàng Thư Các (`articles/index.html`) tự động nạp bài mới vào danh sách, tìm kiếm và phân loại.
+   - Trang chủ (`index.html`) tự động hiển thị bài mới nếu gán `featured: true` (giới hạn top 3 bài tiêu biểu). Không cần sửa tay file `index.html`.
 
 ---
 
