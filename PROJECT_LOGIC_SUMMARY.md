@@ -10,18 +10,22 @@ Dự án **thonas-world** là một website cá nhân / portfolio kiêm blog k�
 thonas-world/
 ├── index.html                      # Trang chủ portfolio chính (Showcase 3 bài tiêu biểu)
 ├── articles/                       # Thư mục chuyên đề bài viết
-│   ├── index.html                  # Tàng Thư Các: Toàn bộ bài viết, tìm kiếm, lọc chuyên mục
+│   ├── index.html                  # Bách Khoa Các: Toàn bộ bài viết, tìm kiếm, lọc chuyên mục
 │   ├── zero-alloc-gc.html          # Chuyên đề tối ưu Garbage Collection trong Unity
 │   ├── scriptable-objects-architecture.html # Chuyên đề kiến trúc GameEvent ScriptableObjects
 │   └── water-ink-shader.html       # Chuyên đề URP Shader Graph Thủy Mặc & Sobel
+├── projects/                       # Thư mục Kỳ Thư Tác Phẩm
+│   └── index.html                  # Kỳ Thư Tác Phẩm: Danh sách dự án, tra cứu theo tên, modal giám định
 ├── assets/
 │   ├── data/
-│   │   └── articles.json           # Siêu dữ liệu bài viết tập trung (metadata registry)
+│   │   ├── articles.json           # Siêu dữ liệu bài viết tập trung (metadata registry)
+│   │   └── projects.json           # Siêu dữ liệu tác phẩm dự án game
 │   ├── css/
 │   │   └── theme.css               # Hệ biến màu cổ phong & Dark/Light mode
 │   └── js/
-│       ├── theme.js                # Quản lý giao diện sáng/tối
-│       └── article-interactions.js # Module xử lý tương tác độc giả & LocalStorage
+│       ├── theme.js                # Quản lý giao diện sáng/tối (áp dụng toàn site, nút toggle chỉ đặt tại trang chủ)
+│       ├── article-interactions.js # Module xử lý tương tác độc giả & LocalStorage
+│       └── projects.js             # Module quản lý Kỳ Thư Tác Phẩm & Modal Giám Định Kỹ Thuật
 └── PROJECT_LOGIC_SUMMARY.md        # Tài liệu tóm tắt logic toàn bộ dự án
 ```
 
@@ -36,11 +40,11 @@ thonas-world/
   - Họa tiết chấm hạt giấy Dó (`bg-do-paper`), hiệu ứng ánh sáng mờ (`ink-glow`), con dấu triện (`seal-stamp`).
   - Hệ thống icon Lucide (`lucide.createIcons()`).
 - **Các phân khu nội dung (Sections):**
-  1. `header`: Thanh điều hướng cố định với menu desktop và drawer mobile menu (toggle qua id `menu-btn` và `mobile-menu`).
+  1. `header`: Thanh điều hướng cố định với menu desktop, drawer mobile menu (toggle qua id `menu-btn` và `mobile-menu`) và nút chuyển đổi giao diện sáng/tối (`data-theme-toggle`). Đây là vị trí duy nhất trên website đặt nút đổi theme Dark/Light.
   2. `#hero`: Lời tựa, định danh "Unity Game Artisan", thẻ trạng thái thông số kỹ thuật (120 FPS, 0 B GC, URP Pipeline).
   3. `#about` (Ngẫm & Luận): 3 trụ cột triết lý làm game (Tối ưu thuần khiết, Game Feel, Mỹ cảm Á Đông).
-  4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Tàng Thư Các" (`articles/index.html`).
-  5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*).
+  4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Bách Khoa Các" (`articles/index.html`).
+  5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*) kèm nút điều hướng "Vào Kỳ Thư Tác Phẩm" (`projects/index.html`).
   6. `#tech` (Khí Cụ Làm Game): Danh sách công cụ (C#, Unity, Shader Graph, Unity Profiler, Git LFS, FMOD, Blender, DOTS).
   7. `#contact` (Bái Phỏng): Khung kết nối qua email và GitHub.
 - **Logic Script Trang Chủ:**
@@ -69,7 +73,7 @@ Module hướng đối tượng `ArticleInteractions`, khởi tạo theo từng 
   - `ky_su_game_user_voted_[articleId]`: Lưu trạng thái đã ấn của người dùng hiện tại (bấm lần 1 tăng điểm + đổi màu nút, bấm lần 2 thu hồi điểm).
 - Hiệu ứng thị giác: `showStampAnimation` tạo badge con dấu dập nảy (`animate-bounce`) bung lên phía trên nút ấn.
 
-#### C. Tàng Thư Các / Bookmark (`toggleBookmark`)
+#### C. Bách Khoa Các / Bookmark (`toggleBookmark`)
 - Lưu mảng các ID bài viết đã đánh dấu vào `ky_su_game_bookmarks`.
 - Cập nhật trạng thái hiển thị của nút `#btn-bookmark` (đổi sang viền vàng hoàng kim khi đã lưu).
 
@@ -95,20 +99,30 @@ Module hướng đối tượng `ArticleInteractions`, khởi tạo theo từng 
 
 Mỗi trang là một tài liệu HTML hoàn chỉnh, kế thừa layout Á Đông của trang chủ:
 - Có thanh tiến trình đọc trên cùng (`#reading-progress-bar`).
-- Có Header với nút quay lại trang chủ và các nút hành động nhanh (`Chia sẻ`, `Tàng Thư`).
+- Có Header với nút quay lại trang chủ và các nút hành động nhanh (`Chia sẻ`, `Tàng Thư`), không có nút chỉnh Dark/Light mode (kế thừa tự động trạng thái theme từ `localStorage`).
 - Breadcrumb điều hướng phân cấp rõ ràng.
 - Nội dung chuyên sâu kèm code block có format giao diện trình đọc code.
 - Khung hành động "Hạ Bút Ấn Triện" (`#btn-tam-dac`, `#btn-khai-sang`).
 - Khu vực "Góc Đàm Đạo Đồng Đạo" với form bình luận và danh sách bình luận đã lưu.
 
-### 2.4. Trang Tàng Thư Các (`articles/index.html`)
+### 2.4. Trang Bách Khoa Các (`articles/index.html`)
 
 Trang kho lưu trữ bài viết toàn diện của hệ thống:
-- **Header:** Giữ thanh điều hướng phong cách cổ phong Á Đông và nút quay lại trang chủ.
+- **Header:** Giữ thanh điều hướng phong cách cổ phong Á Đông và nút quay lại trang chủ (không có nút chỉnh Dark/Light mode).
 - **Thanh tìm kiếm tức thời (Client-side Search):** Tìm kiếm theo tiêu đề, tóm tắt và thẻ tag (`#ZeroAlloc`, `#Shader`...).
 - **Bộ lọc chuyên mục (Taxonomy Tabs):** *Tất Cả*, *Thuật Tối Ưu*, *Kiến Trúc Code*, *Thủy Mặc & Shader*, và tab *Đã Đánh Dấu* (lọc theo danh sách bookmark của người dùng).
 - **Bộ đếm & Danh sách bài:** Tự động nạp từ `assets/data/articles.json`, hiển thị số lượng bài tương ứng, render thẻ bài viết kèm số liệu Ấn Triện và Đàm Đạo từ `localStorage`.
 - **Trạng thái rỗng (Empty State):** Thông báo cổ phong trang nhã khi không tìm thấy kết quả phù hợp.
+
+### 2.5. Trang Kỳ Thư Tác Phẩm (`projects/index.html`)
+
+Trang lưu trữ và trưng bày các dự án game thực chiến của tác giả:
+- **Header:** Giữ thanh điều hướng phong cách cổ phong Á Đông và nút quay lại trang chủ (không có nút chỉnh Dark/Light mode).
+- **Cơ sở dữ liệu tập trung (`assets/data/projects.json`):** Quản lý toàn bộ danh sách tác phẩm, thông số tối ưu, kiến trúc code và giải pháp kỹ thuật.
+- **Thanh tra cứu theo tên tác phẩm (Search by Name):** Tìm kiếm tức thời theo tên dự án (bỏ qua dấu tiếng Việt, không phân biệt hoa thường).
+- **Bộ đếm tác phẩm:** Hiển thị số lượng tác phẩm khớp từ khóa / tổng số tác phẩm.
+- **Kỳ Thư Giám Định (Technical Inspector Modal):** Popup chi tiết hiển thị đầy đủ thông số Profiler (Target FPS, GC Alloc, Draw Calls), kiến trúc phần mềm, danh sách giải pháp kỹ thuật và nút đóng modal linh hoạt.
+- **Hệ thống Ấn Triện Tác Phẩm:** Độc giả có thể hạ ấn triện `tamDac` (💮 Tâm Đắc) và `tinhDieu` (⚡ Tinh Diệu), đồng bộ thời gian thực vào `localStorage`.
 
 ---
 
@@ -117,9 +131,12 @@ Trang kho lưu trữ bài viết toàn diện của hệ thống:
 | Key trong LocalStorage | Kiểu Dữ Liệu | Mục Đích |
 | :--- | :--- | :--- |
 | `ky_su_game_reactions_{id}` | `{ tamDac: number, khaiSang: number }` | Lưu tổng số lượt ấn triện của bài viết `{id}` |
-| `ky_su_game_user_voted_{id}` | `{ tamDac: boolean, khaiSang: boolean }` | Lưu trạng thái người dùng đã ấn triện hay chưa |
+| `ky_su_game_user_voted_{id}` | `{ tamDac: boolean, khaiSang: boolean }` | Lưu trạng thái người dùng đã ấn triện bài viết hay chưa |
 | `ky_su_game_bookmarks` | `Array<string>` | Danh sách các ID bài viết đã lưu vào Tàng Thư |
 | `ky_su_game_comments_{id}` | `Array<{ id, author, avatar, date, content, isGoogle }>` | Danh sách bình luận của bài viết `{id}` |
+| `ky_su_game_project_reactions_{id}` | `{ tamDac: number, tinhDieu: number }` | Lưu tổng số lượt ấn triện của tác phẩm `{id}` |
+| `ky_su_game_project_voted_{id}` | `{ tamDac: boolean, tinhDieu: boolean }` | Lưu trạng thái người dùng đã ấn triện tác phẩm hay chưa |
+| `ky_su_game_theme` | `'light' \| 'dark'` | Trạng thái giao diện sáng/tối toàn website |
 
 ---
 
@@ -146,7 +163,7 @@ Trang kho lưu trữ bài viết toàn diện của hệ thống:
         "date": "2026-11-01"
       }
       ```
-   - Trang Tàng Thư Các (`articles/index.html`) tự động nạp bài mới vào danh sách, tìm kiếm và phân loại.
+   - Trang Bách Khoa Các (`articles/index.html`) tự động nạp bài mới vào danh sách, tìm kiếm và phân loại.
    - Trang chủ (`index.html`) tự động hiển thị bài mới nếu gán `featured: true` (giới hạn top 3 bài tiêu biểu). Không cần sửa tay file `index.html`.
 
 ---

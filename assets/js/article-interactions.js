@@ -162,11 +162,11 @@ class ArticleInteractions {
 
     if (!isBookmarked) {
       bookmarks.push(this.articleId);
-      this.showToast('Đã lưu bài viết vào Tàng Thư Các!');
+      this.showToast('Đã lưu bài viết vào Bách Khoa Các!');
       if (btn) btn.classList.add('text-heritage-gold', 'border-heritage-gold');
     } else {
       bookmarks = bookmarks.filter(id => id !== this.articleId);
-      this.showToast('Đã bỏ lưu khỏi Tàng Thư Các.');
+      this.showToast('Đã bỏ lưu khỏi Bách Khoa Các.');
       if (btn) btn.classList.remove('text-heritage-gold', 'border-heritage-gold');
     }
 

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "co-kiem-van-dao",
+    "title": "Cổ Kiếm Vấn Đạo",
+    "subtitle": "Hành Động Kiếm Hiệp • Combat Prototype",
+    "icon": "swords",
+    "themeColor": "gold",
+    "badgeStyle": "border-heritage-gold/40 text-heritage-gold bg-heritage-gold/10",
+    "status": "Bản Thử Nghiệm",
+    "engine": "Unity 6",
+    "pipeline": "Universal Render Pipeline (URP)",
+    "language": "C# (.NET 8)",
+    "summary": "Game hành động độ khó cao với cơ chế Đỡ đòn hoàn hảo (Parry), Tránh né linh hoạt và Phản kích theo nhịp thở. Tự thiết lập State Machine cho hành vi của kiếm khách đối thủ.",
+    "techSpecs": {
+      "fpsTarget": "120 FPS",
+      "gcAlloc": "0 B / frame (Zero-Alloc)",
+      "drawCalls": "< 75 Draw Calls",
+      "keyMechanic": "Frame-perfect Parry & Posture System"
+    },
+    "architecture": "Hierarchical Finite State Machine (HFSM) kết hợp Struct-based Hitbox Buffer. Tách biệt hoàn toàn luồng Logic đánh đòn và luồng Animation qua Animation Event Bus.",
+    "solutions": [
+      "Sử dụng NativeArray và Job System để tính toán va chạm đa thanh kiếm cùng lúc mà không gây Spike trên Main Thread.",
+      "Triển khai Posture Bar (Thanh Khí Lực) mô phỏng độ mỏi kiếm thuật, ép người chơi phải bắt nhịp thở đối thủ thay vì spam phím.",
+      "Tối ưu hóa URP Shader vệt kiếm (Blade Trail) bằng Procedural Mesh, triệt tiêu 100% rác bộ nhớ hạt (Particle GC)."
+    ],
+    "defaultReactions": {
+      "tamDac": 38,
+      "tinhDieu": 24
+    },
+    "demoUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "van-son-me-cung",
+    "title": "Vân Sơn Mê Cung",
+    "subtitle": "Giải Đố Không Gian • Custom Physics",
+    "icon": "compass",
+    "themeColor": "cinnabar",
+    "badgeStyle": "border-heritage-cinnabar/40 text-heritage-cinnabar bg-heritage-cinnabar/10",
+    "status": "Steam Demo Build",
+    "engine": "Unity 2022 LTS",
+    "pipeline": "Built-in / Custom Cel Shading",
+    "language": "C#",
+    "summary": "Trò chơi giải đố kết hợp mỹ thuật tranh cổ. Sử dụng hệ thống Custom Gravity Physics cho phép người chơi lật ngược thế giới, bước đi trên những bức tường thành và mái ngói cổ.",
+    "techSpecs": {
+      "fpsTarget": "60 FPS (V-Sync)",
+      "gcAlloc": "< 2 KB / scene load",
+      "drawCalls": "< 110 Draw Calls",
+      "keyMechanic": "Dynamic Gravity Vector Matrix"
+    },
+    "architecture": "Phủ định hệ thống trọng lực mặc định của Unity PhysX, thay bằng Gravity Aligner Component tính toán vector trọng lực cục bộ theo bề mặt ngói và vách đá.",
+    "solutions": [
+      "Thuật toán nội suy Quaternion mượt mà giúp góc quay Camera không gây say xe (Motion Sickness) khi lật ngược không gian 180 độ.",
+      "Tích hợp FMOD Adaptive Audio: âm thanh gió núi và chuông gió thay đổi cao độ và âm sắc theo phương vector trọng lực người chơi đang đứng.",
+      "Hệ thống Occlusion Culling tĩnh trên lưới ngói cổ giúp giảm 65% số lượng Triangle cần vẽ trong các mê cung nhiều tầng."
+    ],
+    "defaultReactions": {
+      "tamDac": 45,
+      "tinhDieu": 31
+    },
+    "demoUrl": "#",
+    "githubUrl": "#"
+  }
+]
