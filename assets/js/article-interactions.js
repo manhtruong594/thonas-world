@@ -207,17 +207,17 @@ class ArticleInteractions {
 
     listEl.innerHTML = comments.map(c => `
       <div class="p-4 rounded-xl bg-heritage-card/60 border border-heritage-border/70 space-y-2">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <img src="${c.avatar}" alt="${c.author}" class="w-8 h-8 rounded-full border border-heritage-gold/30 bg-heritage-ink" />
-            <div>
-              <span class="font-serif font-bold text-sm text-heritage-parchment">${this.escapeHtml(c.author)}</span>
-              ${c.isGoogle ? '<span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">Google Verified</span>' : ''}
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${c.avatar}" alt="${c.author}" class="w-8 h-8 rounded-full border border-heritage-gold/30 bg-heritage-ink flex-shrink-0" />
+            <div class="min-w-0">
+              <span class="font-serif font-bold text-sm text-heritage-parchment break-words">${this.escapeHtml(c.author)}</span>
+              ${c.isGoogle ? '<span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 whitespace-nowrap">Google Verified</span>' : ''}
             </div>
           </div>
-          <span class="font-mono text-xs text-heritage-muted">${c.date}</span>
+          <span class="font-mono text-xs text-heritage-muted flex-shrink-0">${c.date}</span>
         </div>
-        <p class="text-sm text-heritage-parchment/90 leading-relaxed font-light pl-11">
+        <p class="text-sm text-heritage-parchment/90 leading-relaxed font-light pl-11 break-words">
           ${this.escapeHtml(c.content)}
         </p>
       </div>

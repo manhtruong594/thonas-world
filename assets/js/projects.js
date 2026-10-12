@@ -143,21 +143,21 @@
             <span>Thông Số Tối Ưu & Profiling</span>
           </h3>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
-            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60">
+            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60 min-w-0">
               <span class="block text-[10px] text-heritage-muted">MỤC TIÊU FPS</span>
               <span class="text-sm font-bold text-heritage-parchment">${project.techSpecs.fpsTarget}</span>
             </div>
-            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60">
+            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60 min-w-0">
               <span class="block text-[10px] text-heritage-muted">GC ALLOC</span>
-              <span class="text-sm font-bold text-heritage-parchment">${project.techSpecs.gcAlloc}</span>
+              <span class="block text-sm font-bold text-heritage-parchment break-words" title="${project.techSpecs.gcAlloc}">${project.techSpecs.gcAlloc}</span>
             </div>
-            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60">
+            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60 min-w-0">
               <span class="block text-[10px] text-heritage-muted">DRAW CALLS</span>
               <span class="text-sm font-bold text-heritage-parchment">${project.techSpecs.drawCalls}</span>
             </div>
-            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60">
+            <div class="p-3 rounded-lg border border-heritage-border bg-heritage-card/60 min-w-0">
               <span class="block text-[10px] text-heritage-muted">CƠ CHẾ LÕI</span>
-              <span class="text-xs font-bold text-heritage-parchment truncate" title="${project.techSpecs.keyMechanic}">${project.techSpecs.keyMechanic}</span>
+              <span class="block text-xs font-bold text-heritage-parchment break-words leading-snug" title="${project.techSpecs.keyMechanic}">${project.techSpecs.keyMechanic}</span>
             </div>
           </div>
         </div>
@@ -302,15 +302,15 @@
 
             <!-- Bảng thông số kỹ thuật nhanh -->
             <div class="grid grid-cols-3 gap-2 pt-2 border-t border-heritage-border/50 font-mono text-[11px] text-center">
-              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60">
+              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60 min-w-0">
                 <span class="block text-[9px] text-heritage-muted uppercase">Mục tiêu</span>
                 <span class="text-heritage-gold font-semibold">${project.techSpecs.fpsTarget}</span>
               </div>
-              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60">
+              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60 min-w-0">
                 <span class="block text-[9px] text-heritage-muted uppercase">GC Alloc</span>
-                <span class="text-heritage-parchment font-semibold truncate" title="${project.techSpecs.gcAlloc}">${project.techSpecs.gcAlloc}</span>
+                <span class="block text-heritage-parchment font-semibold truncate" title="${project.techSpecs.gcAlloc}">${project.techSpecs.gcAlloc}</span>
               </div>
-              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60">
+              <div class="p-2 rounded bg-heritage-ink/50 border border-heritage-border/60 min-w-0">
                 <span class="block text-[9px] text-heritage-muted uppercase">Draw Calls</span>
                 <span class="text-heritage-parchment font-semibold">${project.techSpecs.drawCalls}</span>
               </div>

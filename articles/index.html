@@ -212,9 +212,9 @@
             </div>
             <time class="font-mono text-xs text-heritage-muted">${art.season || art.date}</time>
           </div>
-          <h2 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between">
-            <span>${art.title}</span>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+          <h2 class="text-xl font-serif font-bold text-white group-hover:text-heritage-gold transition-colors flex items-center justify-between gap-2">
+            <span class="min-w-0">${art.title}</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-heritage-gold transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 flex-shrink-0"></i>
           </h2>
           <p class="text-heritage-muted text-sm mt-2 leading-relaxed font-light">
             ${art.summary}
