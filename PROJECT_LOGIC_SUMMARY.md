@@ -46,7 +46,7 @@ thonas-world/
   4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Bách Khoa Các" (`articles/index.html`).
   5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*) kèm nút điều hướng "Vào Kỳ Thư Tác Phẩm" (`projects/index.html`).
   6. `#tech` (Khí Cụ Làm Game): Danh sách công cụ (C#, Unity, Shader Graph, Unity Profiler, Git LFS, FMOD, Blender, DOTS).
-  7. `#contact` (Bái Phỏng): Khung kết nối qua email và GitHub.
+  7. `#contact` (Bái Phỏng): Khung kết nối qua email và menu dropdown mạng xã hội (Facebook, Discord).
 - **Logic Script Trang Chủ:**
   - **Mobile Menu Toggle:** Đóng/mở drawer trên thiết bị di động, tự đóng khi click vào liên kết.
   - **Nạp động 3 bài tiêu biểu:** Tải từ `assets/data/articles.json`, lọc theo `featured: true`, render tối đa 3 thẻ bài viết cổ phong.
