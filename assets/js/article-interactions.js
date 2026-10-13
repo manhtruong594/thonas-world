@@ -215,7 +215,7 @@ class ArticleInteractions {
       <div class="p-4 rounded-xl bg-heritage-card/60 border border-heritage-border/70 space-y-2">
         <div class="flex items-center justify-between gap-3">
           <div class="flex items-center gap-3 min-w-0">
-            <img src="${c.avatar}" alt="${c.author}" class="w-8 h-8 rounded-full border border-heritage-gold/30 bg-heritage-ink flex-shrink-0" />
+            <img src="${c.avatar}" alt="${c.author}" loading="lazy" decoding="async" width="32" height="32" class="w-8 h-8 rounded-full border border-heritage-gold/30 bg-heritage-ink flex-shrink-0" />
             <div class="min-w-0">
               <span class="font-serif font-bold text-sm text-heritage-parchment break-words">${this.escapeHtml(c.author)}</span>
               ${c.isGoogle ? '<span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 whitespace-nowrap">Google Verified</span>' : ''}

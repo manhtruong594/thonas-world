@@ -39,6 +39,9 @@ thonas-world/
   - Tailwind CSS qua CDN với bảng màu tùy biến `heritage` (`ink`, `card`, `border`, `gold`, `amber`, `cinnabar`, `parchment`, `muted`).
   - Họa tiết chấm hạt giấy Dó (`bg-do-paper`), hiệu ứng ánh sáng mờ (`ink-glow`), con dấu triện (`seal-stamp`).
   - Hệ thống icon Lucide (`lucide.createIcons()`).
+  - **Tối ưu Typography & Render (Baseline Standards):**
+    - Áp dụng `text-wrap: balance` cho các tiêu đề `h1, h2, h3` và `text-wrap: pretty` cho các đoạn văn nhằm cân đối layout chữ và chống ngắt từ đơn lẻ (orphans).
+    - Hoãn render nội dung dưới viewport ban đầu (Deferred Rendering) bằng `content-visibility: auto` và `contain-intrinsic-size` cho `#projects`, `#tech`, `#contact`, danh sách bài viết/dự án từ vị trí thứ 3, và bình luận từ vị trí thứ 4.
 - **Các phân khu nội dung (Sections):**
   1. `header`: Thanh điều hướng cố định với menu desktop, drawer mobile menu (khai báo Popover API native qua `popover` và `popovertarget="mobile-menu"`, kèm fallback JS) và nút chuyển đổi giao diện sáng/tối (`data-theme-toggle`). Đây là vị trí duy nhất trên website đặt nút đổi theme Dark/Light.
   2. `#hero`: Lời tựa, định danh "Unity Game Artisan", thẻ trạng thái thông số kỹ thuật (120 FPS, 0 B GC, URP Pipeline).

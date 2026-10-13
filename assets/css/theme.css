@@ -165,3 +165,31 @@ textarea:user-valid:focus,
 input:user-valid:focus {
   border-color: rgb(var(--c-gold)) !important;
 }
+
+/* 6. Typography Optimization (Baseline Web Standards) */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p, blockquote {
+  text-wrap: pretty;
+}
+
+/* 7. Deferred Rendering cho nội dung ngoài viewport ban đầu (Core Web Vitals) */
+#projects,
+#tech,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 400px;
+}
+
+#articles-container > :nth-child(n+3),
+#projects-container > :nth-child(n+3) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 250px;
+}
+
+#comments-list > :nth-child(n+4) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 100px;
+}
