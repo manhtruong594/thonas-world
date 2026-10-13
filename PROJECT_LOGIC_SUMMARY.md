@@ -160,7 +160,6 @@ Trang lưu trữ và trưng bày các dự án game thực chiến của tác gi
         "slug": "articles/new-post.html",
         "category": "Thuật Tối Ưu",
         "badgeStyle": "border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold",
-        "readTime": "8 phút",
         "season": "Đông 2026",
         "summary": "Tóm tắt...",
         "tags": ["Tag1", "Tag2"],
