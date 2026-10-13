@@ -41,14 +41,14 @@ thonas-world/
   - Hệ thống icon Lucide (`lucide.createIcons()`).
   - **Tối ưu Typography & Render (Baseline Standards):**
     - Áp dụng `text-wrap: balance` cho các tiêu đề `h1, h2, h3` và `text-wrap: pretty` cho các đoạn văn nhằm cân đối layout chữ và chống ngắt từ đơn lẻ (orphans).
-    - Hoãn render nội dung dưới viewport ban đầu (Deferred Rendering) bằng `content-visibility: auto` và `contain-intrinsic-size` cho `#projects`, `#tech`, `#contact`, danh sách bài viết/dự án từ vị trí thứ 3, và bình luận từ vị trí thứ 4.
+    - Hoãn render nội dung dưới viewport ban đầu (Deferred Rendering) bằng `content-visibility: auto` và `contain-intrinsic-size` cho `#projects`, `#musings`, `#contact`, danh sách bài viết/dự án từ vị trí thứ 3, và bình luận từ vị trí thứ 4.
 - **Các phân khu nội dung (Sections):**
   1. `header`: Thanh điều hướng cố định với menu desktop, drawer mobile menu (khai báo Popover API native qua `popover` và `popovertarget="mobile-menu"`, kèm fallback JS) và nút chuyển đổi giao diện sáng/tối (`data-theme-toggle`). Đây là vị trí duy nhất trên website đặt nút đổi theme Dark/Light.
   2. `#hero`: Lời tựa, định danh "Unity Game Artisan", thẻ trạng thái thông số kỹ thuật (120 FPS, 0 B GC, URP Pipeline).
   3. `#about` (Ngẫm & Luận): 3 trụ cột triết lý làm game (Tối ưu thuần khiết, Game Feel, Mỹ cảm Á Đông).
   4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Bách Khoa Các" (`articles/index.html`).
   5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*) kèm nút điều hướng "Vào Kỳ Thư Tác Phẩm" (`projects/index.html`).
-  6. `#tech` (Khí Cụ Làm Game): Danh sách công cụ (C#, Unity, Shader Graph, Unity Profiler, Git LFS, FMOD, Blender, DOTS).
+  6. `#musings` (Trà Thất Tản Mạn): Góc chia sẻ hành trình thai nghén game (Devlog), chiêm nghiệm đời sống và tản văn văn hóa/lịch sử (Hiện ở trạng thái Coming Soon).
   7. `#contact` (Bái Phỏng): Khung kết nối qua email và menu dropdown mạng xã hội (Facebook, Discord).
 - **Logic Script Trang Chủ:**
   - **Mobile Menu Popover:** Khai báo declarative với HTML Popover API, tự động light-dismiss và đóng khi click phím Escape hoặc bấm vào liên kết chuyển trang. Có script fallback kiểm tra `!('showPopover' in HTMLElement.prototype)` để toggle class `hidden` trên trình duyệt cũ.

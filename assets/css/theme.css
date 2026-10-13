@@ -177,7 +177,7 @@ p, blockquote {
 
 /* 7. Deferred Rendering cho nội dung ngoài viewport ban đầu (Core Web Vitals) */
 #projects,
-#tech,
+#musings,
 #contact {
   content-visibility: auto;
   contain-intrinsic-size: auto none auto 400px;
