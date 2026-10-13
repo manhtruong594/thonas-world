@@ -71,3 +71,97 @@ html.light .theme-toggle .icon-moon { display: block; }
 html.light .text-emerald-400 { color: #047857; }
 html.light .text-blue-400,
 html.light .hover\:text-blue-400:hover { color: #1d4ed8; }
+
+/* --- Quy chuẩn Web Hiện Đại (modern-web-guidance) --- */
+/* 1. Modal Dialog & Backdrop */
+dialog#inspector-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  outline: none;
+}
+
+dialog#inspector-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+/* 2. Popover Mobile Menu */
+#mobile-menu[popover] {
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: rgb(var(--c-card));
+  color: rgb(var(--c-parchment));
+  outline: none;
+}
+
+#mobile-menu[popover]::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+@media (min-width: 768px) {
+  #mobile-menu[popover] {
+    display: none !important;
+  }
+}
+
+/* 3. Scroll-driven Animations (Reading Progress Bar) */
+@keyframes grow-reading-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  #reading-progress-bar {
+    width: 100% !important;
+    transform-origin: 0% 50%;
+    animation: grow-reading-progress auto linear;
+    animation-timeline: scroll(root block);
+    transition: none !important;
+  }
+}
+
+/* 4. Native Toast Notifications (popover="manual" Top Layer) */
+#heritage-toast[popover] {
+  position: fixed;
+  inset: auto 2rem 2rem auto;
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(var(--c-gold), 0.5);
+  background-color: rgb(var(--c-card) / 0.95);
+  color: rgb(var(--c-parchment));
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+#heritage-toast[popover]:not(:popover-open) {
+  display: none;
+}
+
+/* 5. Form Validation theo Baseline Web Standards */
+textarea:user-invalid,
+input:user-invalid {
+  border-color: rgb(var(--c-cinnabar)) !important;
+  box-shadow: 0 0 0 1px rgba(var(--c-cinnabar), 0.3);
+}
+
+textarea:user-valid:focus,
+input:user-valid:focus {
+  border-color: rgb(var(--c-gold)) !important;
+}

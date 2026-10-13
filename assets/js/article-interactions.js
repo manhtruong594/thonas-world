@@ -68,17 +68,23 @@ class ArticleInteractions {
     this.setupEvents();
   }
 
-  // 1. THANH TIẾN TRÌNH ĐỌC
+  // 1. THANH TIẾN TRÌNH ĐỌC (Scroll-driven animations theo modern-web-guidance)
   initProgressBar() {
     const progressBar = document.getElementById('reading-progress-bar');
     if (!progressBar) return;
 
+    // Nếu trình duyệt hỗ trợ animation-timeline: scroll(), CSS tự động đảm nhận
+    if (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline: scroll()')) {
+      return;
+    }
+
+    // Fallback cho trình duyệt chưa hỗ trợ
     window.addEventListener('scroll', () => {
       const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
       progressBar.style.width = scrolled + '%';
-    });
+    }, { passive: true });
   }
 
   // 2. ẤN TRIỆN (REACTIONS)
@@ -247,12 +253,15 @@ class ArticleInteractions {
     this.showToast('Bút tích đã được khắc ghi thành công!');
   }
 
-  // 6. THÔNG BÁO TOAST
+  // 6. THÔNG BÁO TOAST (popover="manual" Top Layer theo modern-web-guidance)
   showToast(message) {
     let toast = document.getElementById('heritage-toast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'heritage-toast';
+      toast.setAttribute('popover', 'manual');
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
       toast.className = 'fixed bottom-8 right-8 z-50 flex items-center gap-3 px-5 py-3 rounded-xl bg-heritage-card border border-heritage-gold/50 text-heritage-parchment shadow-2xl font-serif text-sm transition-all duration-300 opacity-0 translate-y-4 pointer-events-none';
       document.body.appendChild(toast);
     }
@@ -261,10 +270,25 @@ class ArticleInteractions {
       <span class="w-2 h-2 rounded-full bg-heritage-cinnabar animate-pulse"></span>
       <span>${message}</span>
     `;
-    toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
 
-    setTimeout(() => {
+    if (typeof toast.showPopover === 'function') {
+      try {
+        toast.showPopover();
+        toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+        toast.classList.add('opacity-100', 'translate-y-0');
+      } catch (e) {}
+    } else {
+      toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+    }
+
+    if (toast._timer) clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
       toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+      if (typeof toast.hidePopover === 'function') {
+        try { toast.hidePopover(); } catch (e) {}
+      }
     }, 3000);
   }
 

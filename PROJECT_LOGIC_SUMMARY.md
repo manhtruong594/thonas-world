@@ -40,7 +40,7 @@ thonas-world/
   - Họa tiết chấm hạt giấy Dó (`bg-do-paper`), hiệu ứng ánh sáng mờ (`ink-glow`), con dấu triện (`seal-stamp`).
   - Hệ thống icon Lucide (`lucide.createIcons()`).
 - **Các phân khu nội dung (Sections):**
-  1. `header`: Thanh điều hướng cố định với menu desktop, drawer mobile menu (toggle qua id `menu-btn` và `mobile-menu`) và nút chuyển đổi giao diện sáng/tối (`data-theme-toggle`). Đây là vị trí duy nhất trên website đặt nút đổi theme Dark/Light.
+  1. `header`: Thanh điều hướng cố định với menu desktop, drawer mobile menu (khai báo Popover API native qua `popover` và `popovertarget="mobile-menu"`, kèm fallback JS) và nút chuyển đổi giao diện sáng/tối (`data-theme-toggle`). Đây là vị trí duy nhất trên website đặt nút đổi theme Dark/Light.
   2. `#hero`: Lời tựa, định danh "Unity Game Artisan", thẻ trạng thái thông số kỹ thuật (120 FPS, 0 B GC, URP Pipeline).
   3. `#about` (Ngẫm & Luận): 3 trụ cột triết lý làm game (Tối ưu thuần khiết, Game Feel, Mỹ cảm Á Đông).
   4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Bách Khoa Các" (`articles/index.html`).
@@ -48,7 +48,7 @@ thonas-world/
   6. `#tech` (Khí Cụ Làm Game): Danh sách công cụ (C#, Unity, Shader Graph, Unity Profiler, Git LFS, FMOD, Blender, DOTS).
   7. `#contact` (Bái Phỏng): Khung kết nối qua email và menu dropdown mạng xã hội (Facebook, Discord).
 - **Logic Script Trang Chủ:**
-  - **Mobile Menu Toggle:** Đóng/mở drawer trên thiết bị di động, tự đóng khi click vào liên kết.
+  - **Mobile Menu Popover:** Khai báo declarative với HTML Popover API, tự động light-dismiss và đóng khi click phím Escape hoặc bấm vào liên kết chuyển trang. Có script fallback kiểm tra `!('showPopover' in HTMLElement.prototype)` để toggle class `hidden` trên trình duyệt cũ.
   - **Nạp động 3 bài tiêu biểu:** Tải từ `assets/data/articles.json`, lọc theo `featured: true`, render tối đa 3 thẻ bài viết cổ phong.
   - **Điều hướng bài viết tức thời:** Bắt sự kiện click trên `[data-article-link]` để chuyển hướng ngay sang trang bài viết.
   - **Đồng bộ chỉ số tương tác thời gian thực:** Đọc số lượt Ấn Triện (`tamDac`) và số lượt bình luận từ `localStorage` để cập nhật trực tiếp lên các thẻ tương ứng.
@@ -60,9 +60,8 @@ thonas-world/
 Module hướng đối tượng `ArticleInteractions`, khởi tạo theo từng `data-article-id` của trang bài viết. Toàn bộ dữ liệu được quản lý với tiền tố key `ky_su_game_`.
 
 #### A. Thanh tiến trình đọc (`initProgressBar`)
-- Lắng nghe sự kiện `scroll` của `window`.
-- Tính tỷ lệ: `(scrollTop / (scrollHeight - clientHeight)) * 100`.
-- Cập nhật trực tiếp `width: X%` vào phần tử `#reading-progress-bar`.
+- **CSS Scroll-driven animations:** Áp dụng `@keyframes grow-reading-progress` kết hợp `animation-timeline: scroll(root block)` trong khối `@supports (animation-timeline: scroll())` của `assets/css/theme.css`. Hoạt động trực tiếp trên GPU Compositor thread, không tiêu tốn CPU Main thread.
+- **JavaScript Fallback:** `initProgressBar()` kiểm tra `CSS.supports('animation-timeline: scroll()')`. Nếu trình duyệt chưa hỗ trợ, tự động kích hoạt event listener `window.onscroll` với cờ `{ passive: true }` để tính tỷ lệ cuộn gán vào `width: X%`.
 
 #### B. Hệ thống Ấn Triện / Phản hồi (`toggleReaction`)
 - Phân loại:
@@ -86,12 +85,15 @@ Module hướng đối tượng `ArticleInteractions`, khởi tạo theo từng 
 - Cấu trúc 1 bình luận: `{ id, author, avatar, date, content, isGoogle }`.
 - Luồng hoạt động:
   - Khởi tạo với bình luận mẫu nếu chưa có dữ liệu trong máy.
+  - Form validation: Kết hợp thuộc tính `required` với pseudo-class CSS `:user-invalid` và `:user-valid` trong `assets/css/theme.css` để chỉ cảnh báo viền đỏ chu sa sau khi người dùng rời khỏi ô nhập liệu (blur).
   - Khi người dùng gửi form `#form-comment`: Kiểm tra chuỗi, escape HTML chống XSS, tạo bình luận mới, đẩy lên đầu danh sách (`unshift`), lưu `localStorage`, cập nhật lại giao diện và thông báo Toast.
   - Nút `#btn-google-login`: chỉ mô phỏng. Mở `prompt()` nhập danh xưng, rồi gắn `isGoogle: true` (hiện huy hiệu "Google Verified"). Không có OAuth thật (xem mục 5).
 
 #### F. Thông báo Toast cổ phong (`showToast`)
-- Tự động sinh container `#heritage-toast` cố định ở góc dưới (`fixed bottom-8 right-8`).
-- Đi kèm đèn tín hiệu chu sa nhấp nháy (`bg-heritage-cinnabar animate-pulse`), tự động ẩn sau 3 giây.
+- Tự động sinh container `#heritage-toast` với thuộc tính `popover="manual"` để đẩy phần tử lên **Top Layer** độc lập, không bị ảnh hưởng bởi `z-index` hay `overflow: hidden` của container cha.
+- Hỗ trợ trợ năng: Khai báo `role="status"` và `aria-live="polite"` cho trình đọc màn hình.
+- Đi kèm đèn tín hiệu chu sa nhấp nháy (`bg-heritage-cinnabar animate-pulse`), quản lý timer chống giật nháy khi bấm liên tục, tự động ẩn sau 3 giây.
+- Fallback tự động bằng class opacity nếu trình duyệt chưa hỗ trợ Popover API.
 
 ---
 
@@ -121,7 +123,7 @@ Trang lưu trữ và trưng bày các dự án game thực chiến của tác gi
 - **Cơ sở dữ liệu tập trung (`assets/data/projects.json`):** Quản lý toàn bộ danh sách tác phẩm, thông số tối ưu, kiến trúc code và giải pháp kỹ thuật.
 - **Thanh tra cứu theo tên tác phẩm (Search by Name):** Tìm kiếm tức thời theo tên dự án (bỏ qua dấu tiếng Việt, không phân biệt hoa thường).
 - **Bộ đếm tác phẩm:** Hiển thị số lượng tác phẩm khớp từ khóa / tổng số tác phẩm.
-- **Kỳ Thư Giám Định (Technical Inspector Modal):** Popup chi tiết hiển thị đầy đủ thông số Profiler (Target FPS, GC Alloc, Draw Calls), kiến trúc phần mềm, danh sách giải pháp kỹ thuật và nút đóng modal linh hoạt.
+- **Kỳ Thư Giám Định (Technical Inspector Modal):** Thẻ native `<dialog id="inspector-modal" closedby="any" aria-labelledby="inspector-modal-title">`, quản lý mở/đóng bằng `showModal()` và `close()`. Nền mờ xử lý bằng pseudo-element bản địa `::backdrop`. Tự động bẫy tiêu điểm (focus trap), hỗ trợ phím Escape và light-dismiss (kèm JS fallback kiểm tra bounding rect cho trình duyệt chưa hỗ trợ `closedby`). Hiển thị đầy đủ thông số Profiler (Target FPS, GC Alloc, Draw Calls), kiến trúc phần mềm, danh sách giải pháp kỹ thuật và nút đóng modal linh hoạt.
 - **Hệ thống Ấn Triện Tác Phẩm:** Độc giả có thể hạ ấn triện `tamDac` (💮 Tâm Đắc) và `tinhDieu` (⚡ Tinh Diệu), đồng bộ thời gian thực vào `localStorage`.
 
 ---

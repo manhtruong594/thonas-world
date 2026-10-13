@@ -23,6 +23,9 @@
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'heritage-toast';
+      toast.setAttribute('popover', 'manual');
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
       toast.className = 'fixed bottom-8 right-8 z-50 flex items-center gap-3 px-5 py-3 rounded-lg border border-heritage-gold/40 bg-heritage-ink/95 text-heritage-parchment font-serif text-xs shadow-2xl backdrop-blur-md transition-all duration-300 opacity-0 translate-y-2 pointer-events-none';
       document.body.appendChild(toast);
     }
@@ -32,13 +35,24 @@
       <span>${message}</span>
     `;
 
-    toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
-    toast.classList.add('opacity-100', 'translate-y-0');
+    if (typeof toast.showPopover === 'function') {
+      try {
+        toast.showPopover();
+        toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+        toast.classList.add('opacity-100', 'translate-y-0');
+      } catch (e) {}
+    } else {
+      toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+    }
 
     if (toast._timer) clearTimeout(toast._timer);
     toast._timer = setTimeout(() => {
       toast.classList.remove('opacity-100', 'translate-y-0');
       toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+      if (typeof toast.hidePopover === 'function') {
+        try { toast.hidePopover(); } catch (e) {}
+      }
     }, 3000);
   }
 
@@ -125,7 +139,7 @@
             <span class="w-1.5 h-1.5 rounded-full bg-${accentColor}"></span>
             <span>${project.status}</span>
           </div>
-          <h2 class="text-2xl font-serif font-bold text-white tracking-wide">${project.title}</h2>
+          <h2 id="inspector-modal-title" class="text-2xl font-serif font-bold text-white tracking-wide">${project.title}</h2>
           <p class="text-xs text-heritage-muted font-serif">${project.subtitle}</p>
         </div>
         <button id="btn-close-modal" class="w-8 h-8 rounded border border-heritage-border hover:border-heritage-gold text-heritage-muted hover:text-heritage-gold flex items-center justify-center transition-colors" aria-label="Đóng cửa sổ">
@@ -208,9 +222,13 @@
       </div>
     `;
 
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    if (typeof modal.showModal === 'function') {
+      modal.showModal();
+    } else {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
 
     if (window.lucide) window.lucide.createIcons();
 
@@ -224,9 +242,13 @@
   function closeInspectorModal() {
     const modal = document.getElementById('inspector-modal');
     if (!modal) return;
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
+    if (typeof modal.close === 'function' && modal.open) {
+      modal.close();
+    } else {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
   }
 
   function renderProjects() {
@@ -389,18 +411,23 @@
       });
     }
 
-    // Đóng modal khi bấm ra ngoài khung nội dung
+    // Đóng modal khi bấm ra ngoài backdrop (Fallback light-dismiss cho browser chưa hỗ trợ closedby)
     const modal = document.getElementById('inspector-modal');
     if (modal) {
-      modal.addEventListener('click', e => {
-        if (e.target === modal) closeInspectorModal();
-      });
+      if (!('closedBy' in HTMLDialogElement.prototype)) {
+        modal.addEventListener('click', e => {
+          if (e.target !== modal) return;
+          const rect = modal.getBoundingClientRect();
+          const isDialogContent = (
+            rect.top <= e.clientY &&
+            e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX &&
+            e.clientX <= rect.left + rect.width
+          );
+          if (!isDialogContent) closeInspectorModal();
+        });
+      }
     }
-
-    // Đóng modal bằng phím ESC
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeInspectorModal();
-    });
 
     // Nạp dữ liệu
     fetch('../assets/data/projects.json')
