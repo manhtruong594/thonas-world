@@ -17,7 +17,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Markdown Parser (marked) -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 
   <!-- Prism.js Syntax Highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
@@ -234,10 +234,13 @@
     // Tùy biến marked renderer để giữ nguyên layout khung code cổ phong
     function configureMarkedRenderer() {
       const renderer = new marked.Renderer();
-      renderer.code = function(code, language) {
+      renderer.code = function(token, language) {
+        const rawCode = (typeof token === 'object' && token !== null) ? (token.text || '') : (token || '');
+        const lang = (typeof token === 'object' && token !== null) ? (token.lang || '') : (language || '');
+
         let filename = '';
-        const lines = code.split('\n');
-        let cleanCode = code;
+        const lines = rawCode.split('\n');
+        let cleanCode = rawCode;
 
         // Nếu dòng đầu là comment tên file (// File.cs)
         if (lines[0] && lines[0].trim().startsWith('//')) {
@@ -245,7 +248,7 @@
           cleanCode = lines.slice(1).join('\n');
         }
 
-        const langDisplay = language ? language.toUpperCase() : 'SOURCE';
+        const langDisplay = lang ? lang.toUpperCase() : 'SOURCE';
 
         return `
           <div class="rounded-xl bg-heritage-card border border-heritage-border overflow-hidden my-6">
@@ -253,7 +256,7 @@
               <span>${filename || 'Thư mục mã nguồn'}</span>
               <span class="text-heritage-gold font-bold">${langDisplay}</span>
             </div>
-            <pre class="p-4 font-mono text-xs text-heritage-parchment overflow-x-auto leading-relaxed"><code class="language-${language || 'text'}">${escapeHtml(cleanCode)}</code></pre>
+            <pre class="p-4 font-mono text-xs text-heritage-parchment overflow-x-auto leading-relaxed"><code class="language-${lang || 'text'}">${escapeHtml(cleanCode)}</code></pre>
           </div>
         `;
       };
