@@ -193,3 +193,117 @@ p, blockquote {
   content-visibility: auto;
   contain-intrinsic-size: auto none auto 100px;
 }
+
+/* 8. Styling cho Markdown Bài Viết (Giải Pháp 1: Single Reader Template) */
+.article-markdown {
+  color: rgba(var(--c-parchment), 0.9);
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+.article-markdown h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.article-markdown h2::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgb(var(--c-cinnabar));
+  flex-shrink: 0;
+}
+
+.article-markdown h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--c-gold));
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-markdown p {
+  margin-bottom: 1.25rem;
+}
+
+.article-markdown ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-bottom: 1.25rem;
+  padding-left: 0.5rem;
+  color: rgb(var(--c-muted));
+}
+
+.article-markdown ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+  margin-bottom: 1.25rem;
+  padding-left: 0.5rem;
+  color: rgb(var(--c-muted));
+}
+
+.article-markdown li {
+  margin-bottom: 0.35rem;
+}
+
+.article-markdown blockquote {
+  border-left: 2px solid rgba(var(--c-gold), 0.5);
+  padding-left: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: rgb(var(--c-muted));
+}
+
+.article-markdown code:not(pre code) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: rgb(var(--c-gold));
+  background-color: rgba(var(--c-card), 0.8);
+  border: 1px solid rgba(var(--c-border), 0.8);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+.article-markdown pre {
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  background-color: rgb(var(--c-card));
+  border: 1px solid rgb(var(--c-border));
+  overflow-x: auto;
+  padding: 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgb(var(--c-parchment));
+}
+
+.article-markdown pre code {
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.article-markdown strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+html.light .article-markdown strong {
+  color: rgb(var(--c-title));
+}
+

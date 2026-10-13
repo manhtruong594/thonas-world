@@ -2,7 +2,7 @@
   {
     "id": "zero-alloc-gc",
     "title": "Trị tận gốc bệnh lag giật do Garbage Collection trong Unity: Thuật Zero-Alloc",
-    "slug": "articles/zero-alloc-gc.html",
+    "slug": "articles/reader.html?id=zero-alloc-gc",
     "category": "Thuật Tối Ưu",
     "categorySlug": "optimization",
     "badgeStyle": "border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold",
@@ -15,7 +15,7 @@
   {
     "id": "scriptable-objects-architecture",
     "title": "Rời bỏ vũng lầy Singleton: Xây dựng Game Architecture linh hoạt bằng ScriptableObjects",
-    "slug": "articles/scriptable-objects-architecture.html",
+    "slug": "articles/reader.html?id=scriptable-objects-architecture",
     "category": "Kiến Trúc Code",
     "categorySlug": "architecture",
     "badgeStyle": "border-heritage-cinnabar/30 bg-heritage-cinnabar/5 text-heritage-cinnabar",
@@ -28,7 +28,7 @@
   {
     "id": "water-ink-shader",
     "title": "Tái hiện nét vẽ Thủy Mặc và Vân Sơn trong URP Shader Graph",
-    "slug": "articles/water-ink-shader.html",
+    "slug": "articles/reader.html?id=water-ink-shader",
     "category": "Thủy Mặc & Shader",
     "categorySlug": "shader",
     "badgeStyle": "border-amber-500/30 bg-amber-500/5 text-heritage-amber",

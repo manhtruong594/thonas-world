@@ -11,17 +11,20 @@ thonas-world/
 ├── index.html                      # Trang chủ portfolio chính (Showcase 3 bài tiêu biểu)
 ├── articles/                       # Thư mục chuyên đề bài viết
 │   ├── index.html                  # Bách Khoa Các: Toàn bộ bài viết, tìm kiếm, lọc chuyên mục
-│   ├── zero-alloc-gc.html          # Chuyên đề tối ưu Garbage Collection trong Unity
-│   ├── scriptable-objects-architecture.html # Chuyên đề kiến trúc GameEvent ScriptableObjects
-│   └── water-ink-shader.html       # Chuyên đề URP Shader Graph Thủy Mặc & Sobel
+│   └── reader.html                 # Mẫu chung nạp và đọc bài viết động từ Markdown
 ├── projects/                       # Thư mục Kỳ Thư Tác Phẩm
 │   └── index.html                  # Kỳ Thư Tác Phẩm: Danh sách dự án, tra cứu theo tên, modal giám định
 ├── assets/
+│   ├── content/
+│   │   └── articles/               # Kho văn bản Markdown thuần của các bài viết
+│   │       ├── zero-alloc-gc.md
+│   │       ├── scriptable-objects-architecture.md
+│   │       └── water-ink-shader.md
 │   ├── data/
 │   │   ├── articles.json           # Siêu dữ liệu bài viết tập trung (metadata registry)
 │   │   └── projects.json           # Siêu dữ liệu tác phẩm dự án game
 │   ├── css/
-│   │   └── theme.css               # Hệ biến màu cổ phong & Dark/Light mode
+│   │   └── theme.css               # Hệ biến màu cổ phong, Dark/Light mode & Markdown typography
 │   └── js/
 │       ├── theme.js                # Quản lý giao diện sáng/tối (áp dụng toàn site, nút toggle chỉ đặt tại trang chủ)
 │       ├── article-interactions.js # Module xử lý tương tác độc giả & LocalStorage
@@ -100,15 +103,17 @@ Module hướng đối tượng `ArticleInteractions`, khởi tạo theo từng 
 
 ---
 
-### 2.3. Các Trang Bài Viết Độc Lập (`articles/*.html`)
+### 2.3. Mẫu Chung Đọc Bài Viết Động (`articles/reader.html`) & Kho Markdown (`assets/content/articles/*.md`)
 
-Mỗi trang là một tài liệu HTML hoàn chỉnh, kế thừa layout Á Đông của trang chủ:
-- Có thanh tiến trình đọc trên cùng (`#reading-progress-bar`).
-- Có Header với nút quay lại trang chủ và các nút hành động nhanh (`Chia sẻ`, `Tàng Thư`), không có nút chỉnh Dark/Light mode (kế thừa tự động trạng thái theme từ `localStorage`).
-- Breadcrumb điều hướng phân cấp rõ ràng.
-- Nội dung chuyên sâu kèm code block có format giao diện trình đọc code.
-- Khung hành động "Hạ Bút Ấn Triện" (`#btn-tam-dac`, `#btn-khai-sang`).
-- Khu vực "Góc Đàm Đạo Đồng Đạo" với form bình luận và danh sách bình luận đã lưu.
+Hệ thống chuyển đổi từ nhiều file HTML độc lập sang mô hình **Single Template + Dynamic Markdown (Client-side Rendering)**:
+- **Template chung (`articles/reader.html`):**
+  - Đọc tham số `?id=slug` trên URL (ví dụ `reader.html?id=zero-alloc-gc`).
+  - Nạp siêu dữ liệu từ `assets/data/articles.json` (tiêu đề, thẻ, mùa, câu trích dẫn) để cập nhật breadcrumb, header và title trang.
+  - Tải văn bản Markdown thuần từ `assets/content/articles/{id}.md`.
+  - Phân tích cú pháp Markdown sang HTML bằng thư viện `marked` với cấu hình renderer riêng: bảo toàn khung code block cổ phong với tiêu đề tên file và nhãn ngôn ngữ.
+  - Highlight cú pháp code tự động bằng `Prism.js` (hỗ trợ C#, HLSL...).
+  - Tự động gắn `data-article-id="{id}"` và khởi tạo module tương tác `ArticleInteractions(id)`.
+  - Trạng thái rỗng/lỗi thân thiện khi ký sự không tồn tại hoặc lỗi đường truyền.
 
 ### 2.4. Trang Bách Khoa Các (`articles/index.html`)
 
@@ -150,14 +155,14 @@ Trang lưu trữ và trưng bày các dự án game thực chiến của tác gi
 1. **GitHub Pages:**
    - Website được deploy tự động từ nhánh `main`.
    - Lưu ý đệm cache (`Cache-Control: max-age=600`): Khi có commit mới đẩy lên, cần **Ctrl + F5** hoặc mở tab ẩn danh để trình duyệt bỏ qua cache cũ.
-2. **Khả năng mở rộng — thêm bài viết mới (Data-Driven):**
-   1. Nhân bản một file trong `articles/`, đặt `data-article-id="id-moi"` (ví dụ: `articles/new-post.html`).
+2. **Khả năng mở rộng — thêm bài viết mới (Data-Driven qua Markdown):**
+   1. Tạo một file Markdown mới trong `assets/content/articles/{id}.md` (ví dụ: `assets/content/articles/new-post.md`).
    2. Thêm siêu dữ liệu vào `assets/data/articles.json`:
       ```json
       {
         "id": "new-post",
         "title": "Tiêu đề bài viết...",
-        "slug": "articles/new-post.html",
+        "slug": "articles/reader.html?id=new-post",
         "category": "Thuật Tối Ưu",
         "badgeStyle": "border-heritage-gold/30 bg-heritage-gold/5 text-heritage-gold",
         "season": "Đông 2026",
@@ -168,7 +173,8 @@ Trang lưu trữ và trưng bày các dự án game thực chiến của tác gi
       }
       ```
    - Trang Bách Khoa Các (`articles/index.html`) tự động nạp bài mới vào danh sách, tìm kiếm và phân loại.
-   - Trang chủ (`index.html`) tự động hiển thị bài mới nếu gán `featured: true` (giới hạn top 3 bài tiêu biểu). Không cần sửa tay file `index.html`.
+   - Trang chủ (`index.html`) tự động hiển thị bài mới nếu gán `featured: true` (giới hạn top 3 bài tiêu biểu).
+   - Không cần tạo mới hay nhân bản file HTML. Toàn bộ logic giao diện, tương tác, thanh tiến trình đọc, ấn triện và bình luận được kế thừa từ `articles/reader.html`.
 
 ---
 
