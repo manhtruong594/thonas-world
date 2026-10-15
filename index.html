@@ -377,6 +377,46 @@
             </div>
           </div>
         </div>
+
+        <!-- HỘP THƯ ĐIỂM ĐỀ & ĐỀ XUẤT CHỦ ĐỀ -->
+        <div class="pt-8 mt-8 border-t border-heritage-border/70 text-left space-y-4">
+          <div class="text-center space-y-1.5">
+            <div class="inline-flex items-center gap-2 text-xs font-serif text-heritage-gold tracking-widest uppercase">
+              <i data-lucide="feather" class="w-3.5 h-3.5"></i>
+              <span>Thư Các Điểm Đề</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-serif font-bold text-white tracking-wide">
+              Đề Xuất Chủ Đề Bài Viết Tiếp Theo
+            </h3>
+            <p class="text-heritage-muted text-xs sm:text-sm font-light max-w-md mx-auto leading-relaxed">
+              Bạn quan tâm đến kỹ thuật Unity nào chưa được giải đáp? Hãy gửi đề xuất, thư của bạn sẽ được tự động lưu lại để tôi chuẩn bị bài viết kế tiếp.
+            </p>
+          </div>
+
+          <form id="topic-suggestion-form" class="max-w-md mx-auto space-y-3.5 pt-2">
+            <div>
+              <label for="suggestion-contact" class="block font-serif text-xs text-heritage-parchment/80 mb-1">
+                Danh xưng hoặc Email <span class="text-heritage-muted text-[10px]">(không bắt buộc)</span>
+              </label>
+              <input type="text" id="suggestion-contact" name="contact" placeholder="Vd: Đồng đạo ẩn danh / email@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-heritage-ink/70 border border-heritage-border text-heritage-parchment placeholder-heritage-muted/50 text-xs sm:text-sm focus:outline-none focus:border-heritage-gold transition-colors font-sans" />
+            </div>
+
+            <div>
+              <label for="suggestion-message" class="block font-serif text-xs text-heritage-parchment/80 mb-1">
+                Chủ đề đề xuất hoặc ý kiến góp ý <span class="text-heritage-cinnabar">*</span>
+              </label>
+              <textarea id="suggestion-message" name="message" rows="3" required placeholder="Nêu chủ đề hoặc vấn đề kỹ nghệ bạn muốn tìm hiểu sâu..." class="w-full px-3.5 py-2.5 rounded-lg bg-heritage-ink/70 border border-heritage-border text-heritage-parchment placeholder-heritage-muted/50 text-xs sm:text-sm focus:outline-none focus:border-heritage-gold transition-colors font-sans resize-none"></textarea>
+            </div>
+
+            <div class="text-center pt-1">
+              <button type="submit" id="btn-submit-suggestion" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border border-heritage-gold/50 text-heritage-gold hover:bg-heritage-gold hover:text-heritage-ink transition-all font-serif text-xs sm:text-sm font-bold tracking-wide w-full sm:w-auto shadow-sm">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span id="btn-submit-text">Gửi Điểm Đề</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
       </div>
     </section>
 
@@ -595,6 +635,86 @@
     }
 
     loadFeaturedArticles();
+
+    // -------------------------------------------------------------------------
+    // HỘP THƯ ĐIỂM ĐỀ: Xử lý gửi biểu mẫu ngầm lên Google Form -> Google Sheet
+    // -------------------------------------------------------------------------
+    function showHeritageToast(message) {
+      let toast = document.getElementById('heritage-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'heritage-toast';
+        toast.setAttribute('popover', 'manual');
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.className = 'fixed bottom-8 right-8 z-50 flex items-center gap-3 px-5 py-3 rounded-xl bg-heritage-card border border-heritage-gold/50 text-heritage-parchment shadow-2xl font-serif text-sm transition-all duration-300 opacity-0 translate-y-4 pointer-events-none';
+        document.body.appendChild(toast);
+      }
+
+      toast.innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-heritage-cinnabar animate-pulse"></span>
+        <span>${message}</span>
+      `;
+
+      if (typeof toast.showPopover === 'function') {
+        try { toast.showPopover(); } catch (e) {}
+      }
+      toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      if (toast._timer) clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+        if (typeof toast.hidePopover === 'function') {
+          try { toast.hidePopover(); } catch (e) {}
+        }
+      }, 4000);
+    }
+
+    const suggestionForm = document.getElementById('topic-suggestion-form');
+    if (suggestionForm) {
+      suggestionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const contactInput = document.getElementById('suggestion-contact');
+        const messageInput = document.getElementById('suggestion-message');
+        const submitBtn = document.getElementById('btn-submit-suggestion');
+        const submitText = document.getElementById('btn-submit-text');
+
+        const contact = contactInput ? contactInput.value.trim() : '';
+        const message = messageInput ? messageInput.value.trim() : '';
+
+        if (!message) return;
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+        const originalText = submitText.textContent;
+        submitText.textContent = 'Đang phát thư...';
+
+        const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfu83wAw8TTGm__FdPV9CGTdUneIrU7rdzxu0KGDTlqMIJ1Jg/formResponse';
+        const formData = new FormData();
+        formData.append('entry.920387301', contact || 'Đồng đạo ẩn danh');
+        formData.append('entry.519164937', message);
+
+        try {
+          await fetch(formUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          });
+
+          suggestionForm.reset();
+          showHeritageToast('Thư đã được chuyển vào Thư Các! Trân trọng cảm ơn đồng đạo.');
+        } catch (err) {
+          console.error('Lỗi gửi điểm đề:', err);
+          showHeritageToast('Gặp trục trặc khi phát thư, xin hãy thử lại.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+          submitText.textContent = originalText;
+        }
+      });
+    }
   </script>
 </body>
 </html>
