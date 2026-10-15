@@ -52,13 +52,13 @@ thonas-world/
   4. `#articles` (Ký Sự Kỹ Nghệ): Hiển thị cố định 3 bài viết tiêu biểu (`featured: true`) kèm nút điều hướng "Vào Bách Khoa Các" (`articles/index.html`).
   5. `#projects` (Kỳ Thư Tác Phẩm): Giới thiệu dự án game nổi bật (*Cổ Kiếm Vấn Đạo*, *Vân Sơn Mê Cung*) kèm nút điều hướng "Vào Kỳ Thư Tác Phẩm" (`projects/index.html`).
   6. `#musings` (Trà Thất Tản Mạn): Góc chia sẻ hành trình thai nghén game (Devlog), chiêm nghiệm đời sống và tản văn văn hóa/lịch sử (Hiện ở trạng thái Coming Soon).
-  7. `#contact` (Bái Phỏng): Khung kết nối qua email, menu dropdown mạng xã hội (Facebook, Discord), và khối form **Thư Các Điểm Đề** (tiếp nhận góp ý & đề xuất chủ đề bài viết mới, tự động ghi dữ liệu vào Google Sheet qua Google Form).
+  7. `#contact` (Bái Phỏng): Khung kết nối qua email, menu dropdown mạng xã hội (Facebook, Discord), và khối form **Thư Các Điểm Đề** (tiếp nhận đề xuất bài viết kỹ thuật Unity & làm game nói chung, góp ý cải thiện website, hoặc gửi lời chúc/động viên; tự động ghi dữ liệu vào Google Sheet qua Google Form).
 - **Logic Script Trang Chủ:**
   - **Mobile Menu Popover:** Khai báo declarative với HTML Popover API, tự động light-dismiss và đóng khi click phím Escape hoặc bấm vào liên kết chuyển trang. Có script fallback kiểm tra `!('showPopover' in HTMLElement.prototype)` để toggle class `hidden` trên trình duyệt cũ.
   - **Nạp động 3 bài tiêu biểu:** Tải từ `assets/data/articles.json`, lọc theo `featured: true`, render tối đa 3 thẻ bài viết cổ phong.
   - **Điều hướng bài viết tức thời:** Bắt sự kiện click trên `[data-article-link]` để chuyển hướng ngay sang trang bài viết.
   - **Đồng bộ chỉ số tương tác thời gian thực:** Đọc số lượt Ấn Triện (`tamDac`) và số lượt bình luận từ `localStorage` để cập nhật trực tiếp lên các thẻ tương ứng.
-  - **Hộp thư Điểm Đề (Silent Submit):** Bắt sự kiện `submit` của `#topic-suggestion-form`, ngăn reload trang, đóng gói dữ liệu vào `FormData` theo mã trường Google Form, gửi ngầm với `mode: 'no-cors'` tới Google Form response endpoint, reset form và hiển thị Toast thông báo cổ phong qua hàm `showHeritageToast()`.
+  - **Hộp thư Điểm Đề (Silent Submit):** Bắt sự kiện `submit` của `#topic-suggestion-form`, ngăn reload trang, đóng gói dữ liệu (chủ đề làm game quan tâm, góp ý cải thiện, lời chúc/nhắn gửi) vào `FormData` theo mã trường Google Form, gửi ngầm với `mode: 'no-cors'` tới Google Form response endpoint, reset form và hiển thị Toast thông báo cổ phong qua hàm `showHeritageToast()`.
 
 ---
 
